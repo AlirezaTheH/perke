@@ -10,3 +10,5 @@ venv
 # Python cache files
 __pycache__
 *.pyc
+
+perke/resources/*
