@@ -1,6 +1,6 @@
 import perke
 # initialize keyphrase extraction model, here TopicRank
-extractor = perke.unsupervised.TopicRank()
+extractor = perke.unsupervised.TextRank()
 
 # load the content of the document, here document is expected to be in raw
 # format (i.e. a simple text file) and preprocessing is carried out using spacy

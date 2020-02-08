@@ -30,7 +30,7 @@ class TopicRank(LoadFile):
     --------
     import perke
     import string
-    from hazm import stopwords_list
+    import hazm
 
     # 1. Create a TopicRank extractor.
     extractor = pke.unsupervised.TopicRank()
@@ -42,7 +42,7 @@ class TopicRank(LoadFile):
     #    not contain punctuation marks or stopwords as candidates.
     pos = {'N', 'Ne', 'AJ', 'AJe'}
     punctuations = list(string.punctuation) + ['،', '.', '٪', '×', '؛', '؟']
-    stoplist += stopwords_list() + punctuations
+    stoplist += hazm.stopwords_list() + punctuations
     extractor.candidate_selection(pos=pos, stoplist=stoplist)
 
     # 4. Build topics by grouping candidates with HAC (average linkage,

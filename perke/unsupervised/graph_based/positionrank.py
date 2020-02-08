@@ -31,7 +31,13 @@ class PositionRank(SingleRank):
     pos = {'N', 'Ne', 'AJ', 'AJe'}
 
     # Define the grammar for selecting the keyphrase candidates
-    grammar = "NP: {<ADJ>*<NOUN|PROPN>+}"
+    grammar = r"
+        NP:
+            <P>{<N>}<V>
+        NP:
+            {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
+            <N>}{<.*e?>
+    "
 
     # 1. Create a PositionRank extractor.
     extractor = pke.unsupervised.PositionRank()
