@@ -1,0 +1,10 @@
+language: python
+python:
+  - "3.7"
+  - "3.8"
+
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+  - wget https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip
+  - unzip resources-0.5.zip -d perke/resources
