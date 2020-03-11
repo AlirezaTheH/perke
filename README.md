@@ -13,7 +13,7 @@ pip install git+https://github.com/alirezah320/perke.git
 ```
 
 `perke` also requires a pos tagger model that can be obtained from 
-[here](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip)
+[here](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip) and must be putted in recourses directory
 
 `perke` only supports Python 3.7+.
 
