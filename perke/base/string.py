@@ -1,0 +1,1 @@
+punctuation_marks = 'ـ؟؛،'

@@ -1,51 +1,55 @@
-# Perke (Persian Keyphrase Extractor)
-`perke` is an **open source** python-based **keyphrase extraction** toolkit for persian language. It provides an end-to-end keyphrase extraction pipeline in which each component can be easily modified or extended to develop new models.
+# Perke
+`perke` is an **open source** python-based **keyphrase extraction** toolkit for 
+persian language. It provides an end-to-end keyphrase extraction pipeline in 
+which each component can be easily modified or extended to develop new models.
 
 ## Installation
 - To pip install `perke` from github:
     ```bash
     pip install git+https://github.com/alirezah320/perke.git
     ```
-- `perke` also requires a pos tagger model that can be obtained from [here](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip) and must be put in [resources](perke/resources) directory.
+- `perke` also requires a pos tagger model that can be obtained from 
+  [here](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip) and 
+  must be put in [resources](perke/resources) directory.
 
-- `perke` supports Python 3.7+.
+- `perke` supports Python 3.x.
 
 ## Minimal example
-
-`perke` provides a standardized API for extracting keyphrases from a document. Start by typing the 5 lines below. For using another model, simply replace `perke.unsupervised.TopicRank` with another model.
+`perke` provides a standardized API for extracting keyphrases from a document. 
+Start by typing the 4 lines below. For using another model, simply replace 
+`TextRank` with another model.
 
 ```python
-import perke
+from perke.unsupervised.graph_based import TextRank
 
-# Initialize keyphrase extraction model, here TopicRank
-extractor = perke.unsupervised.TopicRank()
+# Define the set of valid parts of speech.
+valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 
-# Load the content of the document, here document is expected to be in raw
-# format (i.e. a simple text file) and preprocessing is carried out using hazm
-extractor.load_document(input='/path/to/input.txt')
+# 1. Create a TextRank extractor.
+extractor = TextRank(valid_pos_tags=valid_pos_tags)
 
-# Keyphrase candidate selection, in the case of TopicRank: sequences of nouns
-# and adjectives (i.e. `(Noun|Adj)*`)
-extractor.candidate_selection()
+# 2. Load the text.
+extractor.load_text(input='text or path/to/input_file',
+                    word_normalization_method=None)
 
-# Candidate weighting, in the case of TopicRank: using a random walk algorithm
-extractor.candidate_weighting()
+# 3. Build the graph representation of the text and weight the
+#    words. Keyphrase candidates are composed from the 33 percent
+#    highest weighted words.
+extractor.weight_candidates(window_size=2, top_t_percent=0.33)
 
-# N-best selection, keyphrases contains the 10 highest scored candidates as
-# (keyphrase, score) tuples
+# 4. Get the 10 highest weighted candidates as keyphrases.
 keyphrases = extractor.get_n_best(n=10)
 ```
 
-A detailed example is provided in the [examples](examples) directory.
+Detailed examples is provided in the [examples](examples) directory.
 
 ## Implemented models
-
 `perke` currently, implements the following keyphrase extraction models:
 
-* Unsupervised models
-    * Graph-based models
-        * TextRank: article by [Mihalcea and Tarau, 2004](http://www.aclweb.org/anthology/W04-3252.pdf)
-        * SingleRank: article by [Wan and Xiao, 2008](http://www.aclweb.org/anthology/C08-1122.pdf)
-        * TopicRank: article by [Bougouin et al., 2013](http://aclweb.org/anthology/I13-1062.pdf)
-        * PositionRank: article by [Florescu and Caragea, 2017](http://www.aclweb.org/anthology/P17-1102.pdf)
-        * MultipartiteRank: article by [Boudin, 2018](https://arxiv.org/pdf/1803.08721.pdf)
+- Unsupervised models
+    - Graph-based models
+        - TextRank: article by [Mihalcea and Tarau, 2004](http://www.aclweb.org/anthology/W04-3252.pdf)
+        - SingleRank: article by [Wan and Xiao, 2008](https://www.aaai.org/Papers/AAAI/2008/AAAI08-136.pdf)
+        - TopicRank: article by [Bougouin et al., 2013](http://aclweb.org/anthology/I13-1062.pdf)
+        - PositionRank: article by [Florescu and Caragea, 2017](http://www.aclweb.org/anthology/P17-1102.pdf)
+        - MultipartiteRank: article by [Boudin, 2018](https://www.aclweb.org/anthology/N18-2105.pdf)

@@ -1,3 +1,6 @@
+from os.path import (join,
+                     dirname)
+
 from perke.unsupervised.graph_based import MultipartiteRank
 from perke.base.types import (WordNormalizationMethod,
                               HierarchicalClusteringMetric,
@@ -10,8 +13,9 @@ valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 extractor = MultipartiteRank(valid_pos_tags=valid_pos_tags)
 
 # 2. Load the text.
+input_filepath = join(dirname(dirname(dirname(__file__))), 'input.txt')
 extractor.load_text(
-    input='input.txt',
+    input=input_filepath,
     word_normalization_method=WordNormalizationMethod.stemming)
 
 # 3. Select the longest sequences of nouns and adjectives, that do
@@ -30,5 +34,6 @@ extractor.weight_candidates(
 
 # 5. Get the 10 highest weighted candidates as keyphrases
 keyphrases = extractor.get_n_best(n=10)
-for k in keyphrases:
-    print(k)
+
+for i, (weight, keyphrase) in enumerate(keyphrases):
+    print(f'{i+1}.\t{keyphrase}, \t{weight}')
