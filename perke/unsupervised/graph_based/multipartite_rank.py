@@ -30,7 +30,7 @@ class MultipartiteRank(TopicRank):
                                   HierarchicalClusteringMetric,
                                   HierarchicalClusteringLinkageMethod)
 
-    # Define the valid parts of speech to occur in the graph
+    # Define the set of valid part of speech tags to occur in the graph.
     valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 
     # 1. Create a MultipartiteRank extractor.
