@@ -3,7 +3,7 @@ from os.path import (join,
 
 from perke.unsupervised.graph_based import TextRank
 
-# Define the set of valid part of speech tags to occur in the graph.
+# Define the set of valid part of speech tags to occur in the model.
 valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 
 # 1. Create a TextRank extractor.

@@ -6,7 +6,7 @@ from perke.base.types import (WordNormalizationMethod,
                               HierarchicalClusteringMetric,
                               HierarchicalClusteringLinkageMethod)
 
-# Define the set of valid part of speech tags to occur in the graph.
+# Define the set of valid part of speech tags to occur in the model.
 valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 
 # 1. Create a MultipartiteRank extractor.

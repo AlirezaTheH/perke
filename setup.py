@@ -3,6 +3,7 @@ from setuptools import (setup,
                         find_packages)
 
 packages = find_packages(exclude=['tests*'])
+
 with open('requirements.txt') as f:
     requirements = f.read().split()
 

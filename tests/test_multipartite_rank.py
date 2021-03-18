@@ -1,7 +1,7 @@
 from perke.unsupervised.graph_based import MultipartiteRank
 
 
-def test_original_paper_default(text):
+def test_original_article_default(text):
     extractor = MultipartiteRank()
     extractor.load_text(input=text)
     extractor.select_candidates()

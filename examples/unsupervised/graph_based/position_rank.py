@@ -3,7 +3,7 @@ from os.path import (join,
 
 from perke.unsupervised.graph_based import PositionRank
 
-# Define the set of valid part of speech tags to occur in the graph.
+# Define the set of valid part of speech tags to occur in the model.
 valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 
 # Define the grammar for selecting the keyphrase candidates

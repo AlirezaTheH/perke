@@ -13,7 +13,6 @@ which each component can be easily modified or extended to develop new models.
 - `perke` also requires a pos tagger model that can be obtained from 
   [here](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip) and 
   must be put in [resources](perke/resources) directory.
-
 - `perke` supports Python 3.x.
 
 ## Minimal example
@@ -43,7 +42,7 @@ extractor.weight_candidates(window_size=2, top_t_percent=0.33)
 keyphrases = extractor.get_n_best(n=10)
 ```
 
-Detailed examples is provided in the [examples](examples) directory.
+Detailed examples are provided in the [examples](examples) directory.
 
 ## Implemented models
 `perke` currently, implements the following keyphrase extraction models:
