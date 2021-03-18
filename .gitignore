@@ -14,8 +14,8 @@ __pycache__
 *.pyc
 
 # Distribution
-dist/
-*.egg-info/
+dist
+*.egg-info
 
 # Tagger and parser models
 *.model
