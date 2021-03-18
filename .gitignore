@@ -7,9 +7,15 @@
 # Virtualenv
 venv
 
-# Python cache files
+# Python cache
 __pycache__
+
+# Compilde python files
 *.pyc
+
+# Distribution
+dist/
+*.egg-info/
 
 # Tagger and parser models
 *.model
