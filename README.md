@@ -23,7 +23,7 @@ Start by typing the 4 lines below. For using another model, simply replace
 ```python
 from perke.unsupervised.graph_based import TextRank
 
-# Define the set of valid parts of speech.
+# Define the set of valid part of speech tags to occur in the model.
 valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 
 # 1. Create a TextRank extractor.

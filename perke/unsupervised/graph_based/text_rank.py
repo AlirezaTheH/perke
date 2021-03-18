@@ -74,7 +74,7 @@ class TextRank(Extractor):
 
         # Select sequences of words with valid pos tags
         self.select_candidates_with_longest_pos_sequences(
-            valid_pos_tags=self.valid_pos)
+            valid_pos_tags=self.valid_pos_tags)
 
     def build_word_graph(self, window_size=2):
         """
@@ -103,7 +103,7 @@ class TextRank(Extractor):
         flatten_text = []
         for sentence in self.sentences:
             for i, word in enumerate(sentence.normalized_words):
-                is_valid = sentence.pos_tags[i] in self.valid_pos
+                is_valid = sentence.pos_tags[i] in self.valid_pos_tags
                 flatten_text.append((word, is_valid))
 
                 # Add node to the graph

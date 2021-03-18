@@ -51,9 +51,9 @@ class Extractor:
         self.candidates = defaultdict(Candidate)
         self.stopwords = set(hazm.stopwords_list()) | set(punctuation_marks)
         if valid_pos_tags is None:
-            self.valid_pos = {'N', 'Ne', 'AJ', 'AJe'}
+            self.valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
         else:
-            self.valid_pos = valid_pos_tags
+            self.valid_pos_tags = valid_pos_tags
 
     def load_text(self,
                   input,

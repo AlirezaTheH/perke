@@ -93,7 +93,7 @@ class TopicRank(Extractor):
 
         # Select sequence of adjectives and nouns
         self.select_candidates_with_longest_pos_sequences(
-            valid_pos_tags=self.valid_pos)
+            valid_pos_tags=self.valid_pos_tags)
 
         # Filter candidates containing stopwords or punctuation marks
         self.filter_candidates(stopwords=self.stopwords)

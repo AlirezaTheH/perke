@@ -134,7 +134,7 @@ class PositionRank(SingleRank):
         shift = 0
         for i, sentence in enumerate(self.sentences):
             for j, word in enumerate(sentence.normalized_words):
-                if sentence.pos_tags[j] in self.valid_pos:
+                if sentence.pos_tags[j] in self.valid_pos_tags:
                     flatten_text.append((word, shift + j))
 
                     # Add node to the graph
