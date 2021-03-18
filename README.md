@@ -1,7 +1,7 @@
 # Perke
 [![Build Status](https://travis-ci.com/AlirezaH320/perke.svg?branch=master)](https://travis-ci.com/AlirezaH320/perke)
 [![PyPI Version](https://img.shields.io/pypi/v/perke)](https://pypi.python.org/pypi/perke)
-
+[![Python Versions](https://img.shields.io/pypi/pyversions/perke)](https://pypi.org/project/perke)
 
 `perke` is an **open source** python-based **keyphrase extraction** toolkit for 
 persian language. It provides an end-to-end keyphrase extraction pipeline in 
