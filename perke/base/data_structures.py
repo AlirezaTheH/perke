@@ -4,13 +4,13 @@ class Sentence:
 
     Attributes
     ----------
-    words: list
+    words: `list`
         List of words
 
-    pos_tags: list
+    pos_tags: `list`
         List of part of speech tags assigned to words
 
-    normalized_words: list
+    normalized_words: `list`
         List of normalized of words
     """
 
@@ -20,13 +20,13 @@ class Sentence:
 
         Parameters
         ----------
-        words: list
+        words: `list`
             List of words
 
-        pos_tags: list
+        pos_tags: `list`
             List of part of speech tags assigned to words
 
-        normalized_words: list
+        normalized_words: `list`
             List of normalized of words
         """
 
@@ -41,7 +41,7 @@ class Sentence:
 
         Returns
         -------
-        length: int
+        length: `int`
             Number of words
         """
 
@@ -54,22 +54,22 @@ class Candidate:
 
     Attributes
     ----------
-    all_words: list
+    all_words: `list`
         Nested list of words, each words list in the list corresponds to
         one of the candidate occurrence.
 
-    offsets: list
+    offsets: `list`
         List of offsets of each occurrence.
 
-    all_pos_tags: list
+    all_pos_tags: `list`
         Nested list of pos tags, each pos tags list in the list
         corresponds to one of the candidate occurrence.
 
-    normalized_words: list
+    normalized_words: `list`
         List of normalized of words, all occurrences have the same
         list of normalized words.
 
-    weight: float
+    weight: `float`
         Candidate weight in weighting algorithms.
     """
 
@@ -91,7 +91,7 @@ class Candidate:
 
         Returns
         -------
-        length: int
+        length: `int`
             Number of normalized words
         """
 
@@ -103,17 +103,17 @@ class Candidate:
 
         Parameters
         ----------
-        words: list
+        words: `list`
             List of words of the occurrence
 
-        normalized_words: list
+        normalized_words: `list`
             List of normalized of words of the occurrence
 
-        pos_tags: list
+        pos_tags: `list`
             List of part of speech tags assigned to words of the
             occurrence
 
-        offset: int
+        offset: `int`
             The offset of the occurrence
         """
         self.all_words.append(words)

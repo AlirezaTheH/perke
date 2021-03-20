@@ -5,15 +5,15 @@ def is_alphanumeric(word, valid_punctuation_marks='-'):
 
     Parameters
     ----------
-    word: string
+    word: `string`
         The given word
 
-    valid_punctuation_marks: str
-        Punctuation marks that are valid, defaults to '-'.
+    valid_punctuation_marks: `str`
+        Punctuation marks that are valid, defaults to `'-'`.
 
     Returns
     -------
-    result: bool
+    result: `bool`
         The result
     """
 

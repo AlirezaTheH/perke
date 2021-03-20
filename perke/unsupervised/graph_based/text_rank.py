@@ -26,30 +26,35 @@ class TextRank(Extractor):
 
     Examples
     --------
-    from perke.unsupervised.graph_based import TextRank
+    .. code:: python
 
-    # Define the set of valid part of speech tags to occur in the model.
-    valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
+        from perke.unsupervised.graph_based import TextRank
 
-    # 1. Create a TextRank extractor.
-    extractor = TextRank(valid_pos_tags=valid_pos_tags)
+        # Define the set of valid part of speech tags to occur in the model.
+        valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 
-    # 2. Load the text.
-    extractor.load_text(input='text or path/to/input_file',
-                        word_normalization_method=None)
+        # 1. Create a TextRank extractor.
+        extractor = TextRank(valid_pos_tags=valid_pos_tags)
 
-    # 3. Build the graph representation of the text and weight the
-    #    words. Keyphrase candidates are composed from the 33 percent
-    #    highest weighted words.
-    extractor.weight_candidates(window_size=2, top_t_percent=0.33)
+        # 2. Load the text.
+        extractor.load_text(input='text or path/to/input_file',
+                            word_normalization_method=None)
 
-    # 4. Get the 10 highest weighted candidates as keyphrases.
-    keyphrases = extractor.get_n_best(n=10)
+        # 3. Build the graph representation of the text and weight the
+        #    words. Keyphrase candidates are composed from the 33 percent
+        #    highest weighted words.
+        extractor.weight_candidates(window_size=2, top_t_percent=0.33)
+
+        # 4. Get the 10 highest weighted candidates as keyphrases.
+        keyphrases = extractor.get_n_best(n=10)
 
     Attributes
     ----------
-    graph: nx.Graph
+    graph: `nx.Graph`
         The word graph
+
+    graph_edges_are_weighted: `bool`
+        Whether graph edges are weighted
     """
 
     def __init__(self, valid_pos_tags=None):
@@ -58,7 +63,7 @@ class TextRank(Extractor):
 
         Parameters
         ----------
-        valid_pos_tags: set
+        valid_pos_tags: `set`
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
@@ -94,7 +99,7 @@ class TextRank(Extractor):
 
         Parameters
         ----------
-        window_size: int
+        window_size: `int`
             The size of window for connecting two words in the graph,
             defaults to `2`.
         """
@@ -147,14 +152,14 @@ class TextRank(Extractor):
 
         Parameters
         ----------
-        window_size: int
+        window_size: `int`
             The size of window for connecting two words in the graph,
             defaults to `2`.
 
-        top_t_percent: float
+        top_t_percent: `float`
             Percentage of top vertices to keep for phrase generation.
 
-        normalize_weights: bool
+        normalize_weights: `bool`
             Whether normalize keyphrase weight by their length, defaults
             to `False`.
         """
@@ -190,17 +195,17 @@ class TextRank(Extractor):
                                              normalize_weights,
                                              use_position_adjustment=True):
         """
-        Weights candidates using the sum of their word weights.
+        Weights candidates using the sum of their words weights.
 
         Parameters
         ----------
-        weights: dict
+        weights: `dict`
             Word weights
 
-        normalize_weights: bool
+        normalize_weights: `bool`
             Whether normalize keyphrase weight by their length.
 
-        use_position_adjustment: bool
+        use_position_adjustment: `bool`
             Whether use candidate position to adjust weights,
             defaults to `True`.
         """

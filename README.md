@@ -1,31 +1,31 @@
 # Perke
-[![Build Status](https://travis-ci.com/AlirezaH320/perke.svg?branch=master)](https://travis-ci.com/AlirezaH320/perke)
+[![Build Status](https://travis-ci.com/alirezah320/perke.svg?branch=master)](https://travis-ci.com/alirezah320/perke)
 [![PyPI Version](https://img.shields.io/pypi/v/perke)](https://pypi.python.org/pypi/perke)
 [![Python Versions](https://img.shields.io/pypi/pyversions/perke)](https://pypi.org/project/perke)
 
-`perke` is an **open source** python-based **keyphrase extraction** toolkit for 
-persian language. It provides an end-to-end keyphrase extraction pipeline in 
-which each component can be easily modified or extended to develop new models.
+Perke is a Python keyphrase extraction package for Persian language. It 
+provides an end-to-end keyphrase extraction pipeline in which each component 
+can be easily modified or extended to develop new models.
 
 ## Installation
 - The easiest way to install is from PyPI:
   ```bash
   pip install perke
   ```
-  Alternatively, you can install directly from the GitHub:
+  Alternatively, you can install directly from GitHub:
   ```bash
   pip install git+https://github.com/alirezah320/perke.git
   ```
-- `perke` also requires a pos tagger model that can be obtained from 
+- Perke also requires a trained POS tagger model that can be obtained from 
   [here](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip) and 
   must be put in 
   [resources](https://github.com/alirezah320/perke/tree/master/perke/resources) 
   directory.
 
-## Minimal example
-`perke` provides a standardized API for extracting keyphrases from a document. 
-Start by typing the 4 lines below. For using another model, simply replace 
-`TextRank` with another model.
+## Simple Example
+Perke provides a standardized API for extracting keyphrases from a text. Start 
+by typing the 4 lines below to use `TextRank` keyphrase extractor. 
+
 
 ```python
 from perke.unsupervised.graph_based import TextRank
@@ -49,10 +49,12 @@ extractor.weight_candidates(window_size=2, top_t_percent=0.33)
 keyphrases = extractor.get_n_best(n=10)
 ```
 
-Detailed examples are provided in the [examples](examples) directory.
+For other models, see the 
+[examples](https://github.com/alirezah320/perke/tree/master/examples) 
+directory.
 
-## Implemented models
-`perke` currently, implements the following keyphrase extraction models:
+## Implemented Models
+Perke currently, implements the following keyphrase extraction models:
 
 - Unsupervised models
     - Graph-based models

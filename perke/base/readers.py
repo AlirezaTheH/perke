@@ -14,19 +14,19 @@ class Reader:
 
     Attributes
     ----------
-    word_normalization_method: str
+    word_normalization_method: `str`
         Word normalization method
 
-    normalizer: hazm.Normalizer
+    normalizer: `hazm.Normalizer`
         The hazm normalizer instance
 
-    stemmer: hazm.Stemmer
+    stemmer: `hazm.Stemmer`
         The hazm stemmer instance
 
-    lemmatizer: hazm.Lemmatizer
+    lemmatizer: `hazm.Lemmatizer`
         The hazm lemmatizer instance
 
-    pos_tagger: hazm.POSTagger
+    pos_tagger: `hazm.POSTagger`
         The hazm pos tagger instance
     """
 
@@ -36,9 +36,10 @@ class Reader:
 
         Parameters
         ----------
-        word_normalization_method: str
-            Word normalization method, see `WordNormalizationMethod` for
-            available methods.
+        word_normalization_method: `str`
+            Word normalization method, see
+            `perke.base.types.WordNormalizationMethod` for available
+            methods.
         """
 
         self.word_normalization_method = word_normalization_method
@@ -57,7 +58,7 @@ class RawTextReader(Reader):
 
     Attributes
     ----------
-    text: str
+    text: `str`
         Raw text to read sentences from
     """
 
@@ -67,12 +68,13 @@ class RawTextReader(Reader):
 
         Parameters
         ----------
-        input: str
+        input: `str`
             Input, this can be either raw text or filepath.
 
-        word_normalization_method: str
-            Word normalization method, see NormalizationMethod for
-            available methods.
+        word_normalization_method: `str`
+            Word normalization method, see
+            'perke.base.types.WordNormalizationMethod` for available
+            methods.
         """
 
         super().__init__(word_normalization_method)
@@ -92,7 +94,7 @@ class RawTextReader(Reader):
 
         Returns
         -------
-        sentences: list
+        sentences: `list`
             List of sentences
         """
         word_normalization_method = self.word_normalization_method

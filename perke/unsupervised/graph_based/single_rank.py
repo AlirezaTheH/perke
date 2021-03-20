@@ -18,30 +18,37 @@ class SingleRank(TextRank):
 
     Examples
     --------
-    from perke.unsupervised.graph_based import SingleRank
+    .. code:: python
 
-    # Define the set of valid part of speech tags to occur in the model.
-    valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
+        from perke.unsupervised.graph_based import SingleRank
 
-    # 1. Create a SingleRank extractor.
-    extractor = SingleRank(valid_pos_tags=valid_pos_tags)
+        # Define the set of valid part of speech tags to occur in the model.
+        valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 
-    # 2. Load the text.
-    extractor.load_text(input='text or path/to/input_file',
-                        word_normalization_method=None)
+        # 1. Create a SingleRank extractor.
+        extractor = SingleRank(valid_pos_tags=valid_pos_tags)
 
-    # 3. Select the longest sequences of nouns and adjectives as
-    #    candidates.
-    extractor.select_candidates()
+        # 2. Load the text.
+        extractor.load_text(input='text or path/to/input_file',
+                            word_normalization_method=None)
 
-    # 4. Weight the candidates using the sum of their words weights that
-    #    are computed using random walk. In the graph, nodes are certain
-    #    parts of speech (nouns and adjectives) that are connected if
-    #    they co-occur in a window of 10 words.
-    extractor.weight_candidates(window=10)
+        # 3. Select the longest sequences of nouns and adjectives as
+        #    candidates.
+        extractor.select_candidates()
 
-    # 5. Get the 10 highest weighted candidates as keyphrases
-    keyphrases = extractor.get_n_best(n=10)
+        # 4. Weight the candidates using the sum of their words weights that
+        #    are computed using random walk. In the graph, nodes are certain
+        #    parts of speech (nouns and adjectives) that are connected if
+        #    they co-occur in a window of 10 words.
+        extractor.weight_candidates(window=10)
+
+        # 5. Get the 10 highest weighted candidates as keyphrases
+        keyphrases = extractor.get_n_best(n=10)
+
+    Attributes
+    ----------
+    graph_edges_are_weighted: `bool`
+        Whether graph edges are weighted
     """
 
     def __init__(self, valid_pos_tags=None):
@@ -50,7 +57,7 @@ class SingleRank(TextRank):
 
         Parameters
         ----------
-        valid_pos_tags: set
+        valid_pos_tags: `set`
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
@@ -66,7 +73,7 @@ class SingleRank(TextRank):
 
         Parameters
         ----------
-        window_size: int
+        window_size: `int`
             The size of window for connecting two words in the graph,
             defaults to `10`.
         """
@@ -83,11 +90,11 @@ class SingleRank(TextRank):
 
         Parameters
         ----------
-        window_size: int
+        window_size: `int`
             The size of window for connecting two words in the graph,
             defaults to `10`.
 
-        normalize_weights: bool
+        normalize_weights: `bool`
             Whether normalize keyphrase weight by their length, defaults
             to `False`.
         """

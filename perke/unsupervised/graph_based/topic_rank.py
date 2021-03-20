@@ -29,44 +29,46 @@ class TopicRank(Extractor):
 
     Examples
     --------
-    from perke.unsupervised.graph_based import TopicRank
-    from perke.base.types import (WordNormalizationMethod,
-                                  HierarchicalClusteringMetric,
-                                  HierarchicalClusteringLinkageMethod)
+    .. code:: python
 
-    # Define the set of valid part of speech tags to occur in the model.
-    valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
+        from perke.unsupervised.graph_based import TopicRank
+        from perke.base.types import (WordNormalizationMethod,
+                                      HierarchicalClusteringMetric,
+                                      HierarchicalClusteringLinkageMethod)
 
-    # 1. Create a TopicRank extractor.
-    extractor = TopicRank(valid_pos_tags=valid_pos_tags)
+        # Define the set of valid part of speech tags to occur in the model.
+        valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 
-    # 2. Load the text.
-    extractor.load_text(
-        input='text or path/to/input_file',
-        word_normalization_method=WordNormalizationMethod.stemming)
+        # 1. Create a TopicRank extractor.
+        extractor = TopicRank(valid_pos_tags=valid_pos_tags)
 
-    # 3. Select the longest sequences of nouns and adjectives, that do
-    #    not contain punctuation marks or stopwords as candidates.
-    extractor.select_candidates()
+        # 2. Load the text.
+        extractor.load_text(
+            input='text or path/to/input_file',
+            word_normalization_method=WordNormalizationMethod.stemming)
 
-    # 4. Build topics by grouping candidates with HAC (average linkage,
-    #    jaccard distance, threshold of 1/4 of shared normalized words).
-    #    Weight the topics using random walk, and select the first
-    #    occurring candidate from each topic.
-    extractor.weight_candidates(
-        threshold=0.74,
-        metric=HierarchicalClusteringMetric.jaccard,
-        linkage_method=HierarchicalClusteringLinkageMethod.average)
+        # 3. Select the longest sequences of nouns and adjectives, that do
+        #    not contain punctuation marks or stopwords as candidates.
+        extractor.select_candidates()
 
-    # 5. Get the 10 highest weighted candidates as keyphrases
-    keyphrases = extractor.get_n_best(n=10)
+        # 4. Build topics by grouping candidates with HAC (average linkage,
+        #    jaccard distance, threshold of 1/4 of shared normalized words).
+        #    Weight the topics using random walk, and select the first
+        #    occurring candidate from each topic.
+        extractor.weight_candidates(
+            threshold=0.74,
+            metric=HierarchicalClusteringMetric.jaccard,
+            linkage_method=HierarchicalClusteringLinkageMethod.average)
+
+        # 5. Get the 10 highest weighted candidates as keyphrases
+        keyphrases = extractor.get_n_best(n=10)
 
     Attributes
     ----------
-    graph: nx.Graph
+    graph: `nx.Graph`
         The topic graph
 
-    topics: list
+    topics: `list`
         List of topics
     """
 
@@ -76,7 +78,7 @@ class TopicRank(Extractor):
 
         Parameters
         ----------
-        valid_pos_tags: set
+        valid_pos_tags: `set`
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
@@ -104,10 +106,10 @@ class TopicRank(Extractor):
 
         Returns
         -------
-        candidates: list
+        candidates: `list`
             The list of candidates (canonical forms).
 
-        candidate_matrix: np.ndarray
+        candidate_matrix: `np.ndarray`
             Vectorized representation of the candidates.
         """
 
@@ -139,18 +141,20 @@ class TopicRank(Extractor):
 
         Parameters
         ----------
-        threshold: float
+        threshold: `float`
             The minimum similarity for clustering, defaults to `0.74`,
             i.e. more than 1/4 of normalized word overlap similarity.
 
-        metric: str
+        metric: `str`
             The hierarchical clustering metric, defaults to `'jaccard'`
-            See `HierarchicalClusteringMetric` for available methods.
+            See `perke.base.types.HierarchicalClusteringMetric` for
+            available methods.
 
-        linkage_method: str
+        linkage_method: `str`
             The hierarchical clustering linkage method, defaults to
-            `'average'`. See HierarchicalClusteringLinkageMethod
-            for available methods.
+            `'average'`. See
+            `perke.base.types.HierarchicalClusteringLinkageMethod` for
+            available methods.
         """
 
         # Handle content with only one candidate
@@ -212,22 +216,24 @@ class TopicRank(Extractor):
 
         Parameters
         ----------
-        threshold: float
+        threshold: `float`
             The minimum similarity for clustering, defaults to 0.74.
 
-        metric: str
+        metric: `str`
             The hierarchical clustering metric, defaults to `'jaccard'`
-            See `HierarchicalClusteringMetric` for available methods.
-
-        linkage_method: str
-            The hierarchical clustering linkage method, defaults to
-            `'average'`. See HierarchicalClusteringLinkageMethod for
+            See `perke.base.types.HierarchicalClusteringMetric` for
             available methods.
 
-        topic_heuristic: str
+        linkage_method: `str`
+            The hierarchical clustering linkage method, defaults to
+            `'average'`. See
+            `perke.base.types.HierarchicalClusteringLinkageMethod` for
+            available methods.
+
+        topic_heuristic: `str`
             The heuristic for selecting the best candidate for each
             topic, defaults to first occurring candidate. See
-            `TopicHeuristic` for available heuristics.
+            `perke.base.types.TopicHeuristic` for available heuristics.
         """
 
         # Cluster the candidates

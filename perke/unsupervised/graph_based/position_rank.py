@@ -22,44 +22,46 @@ class PositionRank(SingleRank):
 
     Examples
     --------
-    from perke.unsupervised.graph_based import PositionRank
+    .. code:: python
 
-    # Define the set of valid part of speech tags to occur in the model.
-    valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
+        from perke.unsupervised.graph_based import PositionRank
 
-    # Define the grammar for selecting the keyphrase candidates
-    grammar = r'
-        NP:
-            <P>{<N>}<V>
-        NP:
-            {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
-            <N>}{<.*e?>
-    '
+        # Define the set of valid part of speech tags to occur in the model.
+        valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 
-    # 1. Create a PositionRank extractor.
-    extractor = PositionRank(valid_pos_tags=valid_pos_tags)
+        # Define the grammar for selecting the keyphrase candidates
+        grammar = r\"""
+            NP:
+                <P>{<N>}<V>
+            NP:
+                {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
+                <N>}{<.*e?>
+        \"""
 
-    # 2. Load the text.
-    extractor.load_text(input='text or path/to/input_file', 
-                        word_normalization_method=None)
+        # 1. Create a PositionRank extractor.
+        extractor = PositionRank(valid_pos_tags=valid_pos_tags)
 
-    # 3. Select the noun phrases up to 3 words as keyphrase candidates.
-    extractor.select_candidates(grammar=grammar, maximum_word_number=3)
+        # 2. Load the text.
+        extractor.load_text(input='text or path/to/input_file',
+                            word_normalization_method=None)
 
-    # 4. Weight the candidates using the sum of their word's weights
-    #    that are computed using random walk biased with the position of
-    #    the words in the text. In the graph, nodes are words (nouns
-    #    and adjectives only) that are connected if they co-occur in a
-    #    window of 10 words.
-    extractor.weight_candidates(window_size=10)
+        # 3. Select the noun phrases up to 3 words as keyphrase candidates.
+        extractor.select_candidates(grammar=grammar, maximum_word_number=3)
 
-    # 5. Get the 10 highest weighted candidates as keyphrases
-    keyphrases = extractor.get_n_best(n=10)
+        # 4. Weight the candidates using the sum of their word's weights
+        #    that are computed using random walk biased with the position of
+        #    the words in the text. In the graph, nodes are words (nouns
+        #    and adjectives only) that are connected if they co-occur in a
+        #    window of 10 words.
+        extractor.weight_candidates(window_size=10)
+
+        # 5. Get the 10 highest weighted candidates as keyphrases
+        keyphrases = extractor.get_n_best(n=10)
 
     Attributes
     ----------
-    positions: defaultdict(float)
-        Container the sums of word's inverse positions
+    positions: `defaultdict`
+        Dict of normalized word to the sums of word's inverse positions
     """
 
     def __init__(self, valid_pos_tags=None):
@@ -68,7 +70,7 @@ class PositionRank(SingleRank):
 
         Parameters
         ----------
-        valid_pos_tags: set
+        valid_pos_tags: `set`
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
@@ -84,17 +86,18 @@ class PositionRank(SingleRank):
 
         Parameters
         ----------
-        grammar: str
-            Grammar defining part of speech patterns of noun phrases, 
-            defaults to
-            `'NP:
-                <P>{<N>}<V>
-            NP:
-                {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?
-                |AJe?|PRO|CL|RESe?>*}
-                <N>}{<.*e?>.'`
+        grammar: `str`
+            Grammar defining part of speech patterns of noun phrases,
+            defaults to::
+                r\"""
+                NP:
+                    <P>{<N>}<V>
+                NP:
+                    {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
+                    <N>}{<.*e?>.
+                \"""
 
-        maximum_length: int
+        maximum_length: `int`
             Maximum length in words of the candidate, defaults to `3`.
         """
 
@@ -123,7 +126,7 @@ class PositionRank(SingleRank):
 
         Parameters
         ----------
-        window_size: int
+        window_size: `int`
             The size of window for connecting two words in the graph,
             defaults to `10`.
         """
@@ -165,11 +168,11 @@ class PositionRank(SingleRank):
 
         Parameters
         ----------
-        window_size: int
+        window_size: `int`
             The size of window for connecting two words in the graph,
             defaults to `10`.
 
-        normalize_weights: bool
+        normalize_weights: `bool`
             Normalize keyphrase weight by their length, defaults to
             `False`.
         """
@@ -200,7 +203,7 @@ class PositionRank(SingleRank):
 
         Parameters
         ----------
-        maximum_length: int
+        maximum_length: `int`
             Maximum length in words of the candidate, defaults to 3.
         """
         for c in list(self.candidates):

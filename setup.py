@@ -1,4 +1,5 @@
-from os.path import join
+import re
+import os
 from setuptools import (setup,
                         find_packages)
 
@@ -10,13 +11,13 @@ with open('requirements.txt') as f:
 with open('README.md') as f:
     long_description = f.read()
 
-filename = join('perke', 'version.py')
-with open(filename) as f:
-    exec(compile(f.read(), filename, 'exec'))
+with open(os.path.join('perke', 'version.py')) as f:
+    version_pattern = re.compile(r'__version__\s+=\s+\'(?P<version>.*)\'')
+    version = re.search(version_pattern, f.read()).group('version')
 
 
 setup(name='perke',
-      version=__version__,
+      version=version,
       description='A keyphrase extractor for Persian',
       long_description=long_description,
       long_description_content_type='text/markdown',

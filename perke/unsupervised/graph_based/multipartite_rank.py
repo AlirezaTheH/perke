@@ -17,7 +17,7 @@ class MultipartiteRank(TopicRank):
     a single graph and exploits their mutually reinforcing relationship
     to improve candidate ranking.
 
-    Implementation of the PositionRank described in:
+    Implementation of the MultipartiteRank described in:
 
     Florian Boudin.
     Unsupervised Keyphrase Extraction with Multipartite Graphs.
@@ -25,45 +25,47 @@ class MultipartiteRank(TopicRank):
 
     Examples
     --------
-    from perke.unsupervised.graph_based import MultipartiteRank
-    from perke.base.types import (WordNormalizationMethod,
-                                  HierarchicalClusteringMetric,
-                                  HierarchicalClusteringLinkageMethod)
+    .. code:: python
 
-    # Define the set of valid part of speech tags to occur in the model.
-    valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
+        from perke.unsupervised.graph_based import MultipartiteRank
+        from perke.base.types import (WordNormalizationMethod,
+                                      HierarchicalClusteringMetric,
+                                      HierarchicalClusteringLinkageMethod)
 
-    # 1. Create a MultipartiteRank extractor.
-    extractor = MultipartiteRank(valid_pos_tags=valid_pos_tags)
+        # Define the set of valid part of speech tags to occur in the model.
+        valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 
-    # 2. Load the text.
-    extractor.load_text(
-        input='text or path/to/input_file',
-        word_normalization_method=WordNormalizationMethod.stemming)
+        # 1. Create a MultipartiteRank extractor.
+        extractor = MultipartiteRank(valid_pos_tags=valid_pos_tags)
 
-    # 3. Select the longest sequences of nouns and adjectives, that do
-    #    not contain punctuation marks or stopwords as candidates.
-    extractor.select_candidates()
+        # 2. Load the text.
+        extractor.load_text(
+            input='text or path/to/input_file',
+            word_normalization_method=WordNormalizationMethod.stemming)
 
-    # 4. Build the Multipartite graph and weight candidates using
-    #    random walk, alpha controls the weight adjustment mechanism,
-    #    see TopicRank for metric, linkage method and threshold
-    #    parameters.
-    extractor.weight_candidates(
-        threshold=0.74,
-        metric=HierarchicalClusteringMetric.jaccard,
-        linkage_method=HierarchicalClusteringLinkageMethod.average,
-        alpha=1.1)
+        # 3. Select the longest sequences of nouns and adjectives, that do
+        #    not contain punctuation marks or stopwords as candidates.
+        extractor.select_candidates()
 
-    # 5. Get the 10 highest weighted candidates as keyphrases
-    keyphrases = extractor.get_n_best(n=10)
+        # 4. Build the Multipartite graph and weight candidates using
+        #    random walk, alpha controls the weight adjustment mechanism,
+        #    see TopicRank for metric, linkage method and threshold
+        #    parameters.
+        extractor.weight_candidates(
+            threshold=0.74,
+            metric=HierarchicalClusteringMetric.jaccard,
+            linkage_method=HierarchicalClusteringLinkageMethod.average,
+            alpha=1.1)
+
+        # 5. Get the 10 highest weighted candidates as keyphrases
+        keyphrases = extractor.get_n_best(n=10)
 
     Attributes
     ----------
     topic_ids: dict
         Dict of canonical forms of candidates to to topic identifiers
 
-    graph: nx.DiGraph
+    graph: `nx.DiGraph`
         The candidate graph
     """
 
@@ -73,7 +75,7 @@ class MultipartiteRank(TopicRank):
 
         Parameters
         ----------
-        valid_pos_tags: set
+        valid_pos_tags: `set`
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
@@ -92,18 +94,20 @@ class MultipartiteRank(TopicRank):
 
         Parameters
         ----------
-        threshold: float
+        threshold: `float`
             The minimum similarity for clustering, defaults to `0.74`,
             i.e. more than 1/4 of normalized word overlap similarity.
 
-        metric: str
+        metric: `str`
             The hierarchical clustering metric, defaults to `'jaccard'`
-            See `HierarchicalClusteringMetric` for available methods.
+            See `perke.base.types.HierarchicalClusteringMetric` for
+            available methods.
 
-        linkage_method: str
+        linkage_method: `str`
             The hierarchical clustering linkage method, defaults to
-            `'average'`. See HierarchicalClusteringLinkageMethod
-            for available methods.
+            `'average'`. See
+            `perke.base.types.HierarchicalClusteringLinkageMethod` for
+            available methods.
         """
         super().cluster_topics(threshold, metric, linkage_method)
 
@@ -162,7 +166,7 @@ class MultipartiteRank(TopicRank):
 
         Parameters
         ----------
-        alpha: float
+        alpha: `float`
             Hyper-parameter that controls the strength of the weight
             adjustment, defaults to `1.1`.
         """
@@ -211,19 +215,21 @@ class MultipartiteRank(TopicRank):
 
         Parameters
         ----------
-        threshold: float
+        threshold: `float`
             The minimum similarity for clustering, defaults to 0.74.
 
-        metric: str
+        metric: `str`
             The hierarchical clustering metric, defaults to `'jaccard'`
-            See `HierarchicalClusteringMetric` for available methods.
-
-        linkage_method: str
-            The hierarchical clustering linkage method, defaults to
-            `'average'`. See HierarchicalClusteringLinkageMethod for
+            See `perke.base.types.HierarchicalClusteringMetric` for
             available methods.
 
-        alpha: float
+        linkage_method: `str`
+            The hierarchical clustering linkage method, defaults to
+            `'average'`. See
+            `perke.base.types.HierarchicalClusteringLinkageMethod` for
+            available methods.
+
+        alpha: `float`
             Hyper-parameter that controls the strength of the
             weight adjustment, defaults to `1.1`
         """

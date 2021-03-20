@@ -17,22 +17,21 @@ class Extractor:
 
     Attributes
     ----------
-    word_normalization_method: str
-        Word normalization method, See `WordNormalizationMethod` for
-        methods.
+    word_normalization_method: `str`
+        Word normalization method.
 
-    sentences: list
+    sentences: `list`
         List of sentence objects of the text
 
-    candidates: defaultdict
+    candidates: `defaultdict`
         Dict of canonical forms of candidates to candidates, canonical
         form of a candidate is a string joined from normalized words of
         the candidate.
 
-    stopwords: set
+    stopwords: `set`
         Set of stopwords
 
-    valid_pos_tags: set
+    valid_pos_tags: `set`
         Set of valid part of speech tags.
     """
 
@@ -42,7 +41,7 @@ class Extractor:
 
         Parameters
         ----------
-        valid_pos_tags: set
+        valid_pos_tags: `set`
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
@@ -63,12 +62,13 @@ class Extractor:
 
         Parameters
         ----------
-        input: str
+        input: `str`
             Input, this can be either raw text or filepath.
 
-        word_normalization_method: str
+        word_normalization_method: `str`
             Word normalization method, defaults to `'stemming'`. See
-            `WordNormalizationMethod` for available methods.
+            `perke.base.types.WordNormalizationMethod` for available
+            methods.
         """
 
         # Initialize reader
@@ -88,19 +88,19 @@ class Extractor:
 
         Parameters
         ----------
-        candidate: str
+        candidate: `str`
             the canonical form of the candidate
 
-        selected_candidates: list
+        selected_candidates: `list`
             the list of already selected candidates canonical forms
 
-        minimum_length: int
+        minimum_length: `int`
             minimum length of the candidate to be considered,
             defaults to `1`.
 
         Returns
         -------
-        result: bool
+        result: `bool`
             The result
         """
 
@@ -125,20 +125,20 @@ class Extractor:
 
         Parameters
         ----------
-        n: int
+        n: `int`
             The number of candidates, defaults to `10`.
 
-        remove_redundants: bool
+        remove_redundants: `bool`
             Whether redundant keyphrases are filtered out from the
             n-best list, defaults to `False`.
 
-        normalized: bool
+        normalized: `bool`
             Whether to get normalized words instead of words of first
             occurring form of candidate, defaults to `False`.
 
         Returns
         -------
-        n_best: list
+        n_best: `list`
             List of `(candidate, weight)` tuples, `candidate` can be
             either canonical form or first occurrence joined words.
         """
@@ -200,17 +200,17 @@ class Extractor:
 
         Parameters
         ----------
-        words: list
+        words: `list`
             List of words of the occurrence
 
-        normalized_words: list
+        normalized_words: `list`
             List of normalized of words of the occurrence
 
-        pos_tags: list
+        pos_tags: `list`
             List of part of speech tags assigned to words of the
             occurrence
 
-        offset: int
+        offset: `int`
             The offset of the occurrence
         """
 
@@ -230,7 +230,7 @@ class Extractor:
 
         Parameters
         ----------
-        valid_pos_tags: set
+        valid_pos_tags: `set`
             Set of valid part of speech tags
         """
         self.select_candidates_with_longest_sequences(
@@ -243,7 +243,7 @@ class Extractor:
 
         Parameters
         ----------
-        keywords: set
+        keywords: `set`
             Set of given keywords
         """
         self.select_candidates_with_longest_sequences(
@@ -257,10 +257,10 @@ class Extractor:
 
         Parameters
         ----------
-        key: function
+        key: `function`
             Function that given a sentence and returns a list
 
-        valid_values: set
+        valid_values: `set`
             The valid values
         """
 
@@ -303,15 +303,16 @@ class Extractor:
 
         Parameters
         ----------
-        grammar: str
+        grammar: `str`
             grammar defining part of speech patterns of noun phrases,
-            defaults to:
-            `'NP:
-                  <P>{<N>}<V>
-              NP:
-                  {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?
-                  |AJe?|PRO|CL|RESe?>*}
-                  <N>}{<.*e?>'`
+            defaults to::
+                r\"""
+                NP:
+                    <P>{<N>}<V>
+                NP:
+                    {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
+                    <N>}{<.*e?>'
+                \"""
         """
 
         # Initialize default grammar if none provided
@@ -320,8 +321,7 @@ class Extractor:
                 NP:
                     <P>{<N>}<V>
                 NP:
-                    {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?
-                    |PRO|CL|RESe?>*}
+                    {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
                     <N>}{<.*e?>
             """
 
@@ -371,29 +371,29 @@ class Extractor:
 
         Parameters
         ----------
-        stopwords: set
+        stopwords: `set`
             Set of stopwords, defaults to an empty set.
 
-        minimum_characters: int
+        minimum_characters: `int`
             Minimum number of characters for a candidate, defaults to
             `3`.
 
-        minimum_word_characters: int
+        minimum_word_characters: `int`
             Minimum number of characters for a word to be considered as
             a valid word, defaults to `2`.
 
-        valid_punctuation_marks: str
+        valid_punctuation_marks: `str`
             Punctuation marks that are valid for a candidate, defaults
             to `'-'`.
 
-        maximum_length: int
+        maximum_length: `int`
             Maximum length in words of the candidate, defaults to `5`.
 
-        alphanumeric_only: bool
+        alphanumeric_only: `bool`
             Filters candidates containing non alpha-numeric characters,
             defaults to `True`.
 
-        invalid_pos_tags: set
+        invalid_pos_tags: `set`
             Set of unwanted part of speech tags in candidates, defaults
             to an empty set.
         """
