@@ -1,5 +1,6 @@
 # Perke
 [![Build Status](https://travis-ci.com/alirezah320/perke.svg?branch=master)](https://travis-ci.com/alirezah320/perke)
+[![Documentation Status](https://readthedocs.org/projects/perke/badge/?version=latest)](https://perke.readthedocs.io/en/latest/?badge=latest)
 [![PyPI Version](https://img.shields.io/pypi/v/perke)](https://pypi.python.org/pypi/perke)
 [![Python Versions](https://img.shields.io/pypi/pyversions/perke)](https://pypi.org/project/perke)
 
@@ -58,8 +59,13 @@ Perke currently, implements the following keyphrase extraction models:
 
 - Unsupervised models
     - Graph-based models
-        - TextRank: article by [Mihalcea and Tarau, 2004](http://www.aclweb.org/anthology/W04-3252.pdf)
-        - SingleRank: article by [Wan and Xiao, 2008](https://www.aaai.org/Papers/AAAI/2008/AAAI08-136.pdf)
-        - TopicRank: article by [Bougouin et al., 2013](http://aclweb.org/anthology/I13-1062.pdf)
-        - PositionRank: article by [Florescu and Caragea, 2017](http://www.aclweb.org/anthology/P17-1102.pdf)
-        - MultipartiteRank: article by [Boudin, 2018](https://www.aclweb.org/anthology/N18-2105.pdf)
+        - TextRank: [article](http://www.aclweb.org/anthology/W04-3252.pdf) 
+          by Mihalcea and Tarau, 2004
+        - SingleRank: [article](https://www.aaai.org/Papers/AAAI/2008/AAAI08-136.pdf) 
+          by Wan and Xiao, 2008
+        - TopicRank: [article](http://aclweb.org/anthology/I13-1062.pdf) 
+          by Bougouin, Boudin and Daille, 2013
+        - PositionRank: [article](http://www.aclweb.org/anthology/P17-1102.pdf) 
+          by Florescu and Caragea, 2017
+        - MultipartiteRank: [article](https://www.aclweb.org/anthology/N18-2105.pdf) 
+          by Boudin, 2018

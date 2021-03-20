@@ -19,9 +19,10 @@ class MultipartiteRank(TopicRank):
 
     Implementation of the MultipartiteRank described in:
 
-    Florian Boudin.
-    Unsupervised Keyphrase Extraction with Multipartite Graphs.
-    In proceedings of NAACL, pages 667-672, 2018.
+    | Florian Boudin
+    | `Unsupervised Keyphrase Extraction with Multipartite Graphs
+      <https://www.aclweb.org/anthology/N18-2105.pdf>`_
+    | In proceedings of NAACL, pages 667-672, 2018
 
     Examples
     --------

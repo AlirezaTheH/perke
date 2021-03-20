@@ -15,10 +15,11 @@ class PositionRank(SingleRank):
 
     Implementation of the PositionRank described in:
 
-    Corina Florescu and Cornelia Caragea.
-    PositionRank: An Unsupervised Approach to Keyphrase Extraction from 
-    Scholarly Documents.
-    In proceedings of ACL, pages 1105-1115, 2017.
+    | Corina Florescu and Cornelia Caragea
+    | `PositionRank: An Unsupervised Approach to Keyphrase Extraction
+      from Scholarly Documents
+      <http://www.aclweb.org/anthology/P17-1102.pdf>`_
+    | In proceedings of ACL, pages 1105-1115, 2017
 
     Examples
     --------

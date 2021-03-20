@@ -23,9 +23,10 @@ class TopicRank(Extractor):
 
     Implementation of the SingleRank model described in:
 
-    Adrien Bougouin, Florian Boudin and Béatrice Daille.
-    TopicRank: Graph-Based Topic Ranking for Keyphrase Extraction.
-    In proceedings of IJCNLP, pages 543-551, 2013.
+    | Adrien Bougouin, Florian Boudin and Béatrice Daille
+    | `TopicRank: Graph-Based Topic Ranking for Keyphrase Extraction
+      <http://aclweb.org/anthology/I13-1062.pdf>`_
+    | In proceedings of IJCNLP, pages 543-551, 2013
 
     Examples
     --------

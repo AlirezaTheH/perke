@@ -12,9 +12,11 @@ class SingleRank(TextRank):
 
     Implementation of the SingleRank model described in:
 
-    Xiaojun Wan and Jianguo Xiao.
-    Single Document Keyphrase Extraction Using Neighborhood Knowledge.
-    In proceedings of the NCAI, pages 855–860, 2008.
+    | Xiaojun Wan and Jianguo Xiao
+    | `Single Document Keyphrase Extraction Using Neighborhood
+       Knowledge
+       <https://www.aaai.org/Papers/AAAI/2008/AAAI08-136.pdf>`_
+    | In proceedings of the NCAI, pages 855–860, 2008
 
     Examples
     --------

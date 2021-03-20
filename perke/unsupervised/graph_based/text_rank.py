@@ -20,9 +20,10 @@ class TextRank(Extractor):
     Implementation of the TextRank model for keyword extraction
     described in:
 
-    Rada Mihalcea and Paul Tarau.
-    TextRank: Bringing Order into Texts
-    In Proceedings of EMNLP, 2004.
+    | Rada Mihalcea and Paul Tarau
+    | `TextRank: Bringing Order into Texts
+      <http://www.aclweb.org/anthology/W04-3252.pdf>`_
+    | In Proceedings of EMNLP, 2004
 
     Examples
     --------
