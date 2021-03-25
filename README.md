@@ -55,7 +55,7 @@ For other models, see the
 directory.
 
 ## Documentation
-Documentation and References are available at 
+Documentation and references are available at 
 [Read The Docs](https://perke.readthedocs.io). 
 
 ## Implemented Models
