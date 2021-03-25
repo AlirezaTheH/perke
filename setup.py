@@ -5,7 +5,7 @@ from setuptools import (setup,
 
 packages = find_packages(exclude=['tests*'])
 
-with open('requirements.txt') as f:
+with open('requirements/default.txt') as f:
     requirements = f.read().split()
 
 with open('README.md') as f:

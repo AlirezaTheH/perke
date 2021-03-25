@@ -1,0 +1,9 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions about Perke
+    url: https://github.com/alirezah320/perke/discussions/new?category=q-a
+    about: Ask questions about usage of Perke.
+  - name: Discussions and Ideas
+    url: https://github.com/perke/perke/discussions
+    about: Talk about new algorithms, models, show your latest application of
+    Perke.

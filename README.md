@@ -1,5 +1,5 @@
 # Perke
-[![Build Status](https://travis-ci.com/alirezah320/perke.svg?branch=master)](https://travis-ci.com/alirezah320/perke)
+[![Build Status](https://travis-ci.com/alirezah320/perke.svg?branch=main)](https://travis-ci.com/alirezah320/perke)
 [![Documentation Status](https://readthedocs.org/projects/perke/badge/?version=latest)](https://perke.readthedocs.io/en/latest/?badge=latest)
 [![PyPI Version](https://img.shields.io/pypi/v/perke)](https://pypi.python.org/pypi/perke)
 [![Python Versions](https://img.shields.io/pypi/pyversions/perke)](https://pypi.org/project/perke)
@@ -20,7 +20,7 @@ can be easily modified or extended to develop new models.
 - Perke also requires a trained POS tagger model that can be obtained from 
   [here](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip) and 
   must be put in 
-  [resources](https://github.com/alirezah320/perke/tree/master/perke/resources) 
+  [resources](https://github.com/alirezah320/perke/tree/main/perke/resources) 
   directory.
 
 ## Simple Example
@@ -51,8 +51,12 @@ keyphrases = extractor.get_n_best(n=10)
 ```
 
 For other models, see the 
-[examples](https://github.com/alirezah320/perke/tree/master/examples) 
+[`examples`](https://github.com/alirezah320/perke/tree/main/examples) 
 directory.
+
+## Documentation
+Documentation and References are available at 
+[Read The Docs](https://perke.readthedocs.io). 
 
 ## Implemented Models
 Perke currently, implements the following keyphrase extraction models:

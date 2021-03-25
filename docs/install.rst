@@ -20,5 +20,5 @@ you have Python installed, follow bellow steps:
 - Perke also requires a POS tagger model that can be obtained from
   `here <https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip>`_
   and must be put in
-  `resources <https://github.com/alirezah320/perke/tree/master/perke/resources>`_
+  `resources <https://github.com/alirezah320/perke/tree/main/perke/resources>`_
   directory.

@@ -37,5 +37,5 @@ to use these models.
             print(f'{i+1}.\t{keyphrase}, \t{weight}')
 
 For other models, see the
-`examples <https://github.com/alirezah320/perke/tree/master/examples>`_
+`examples <https://github.com/alirezah320/perke/tree/main/examples>`_
 directory.

@@ -1,20 +1,30 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
-
 ---
+<!-- 
+Use a clear and descriptive title for the issue to identify the problem. 
+-->
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+### Summary
+<!-- 
+One paragraph explanation of the feature
+-->
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+### Motivation
+<!-- 
+Why are we doing this? What use cases does it support? What is the 
+expected outcome? 
+-->
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+### Alternatives
+<!-- 
+A clear and concise description of the alternative solutions you've 
+considered. Be sure to explain why Perke's existing customizability isn't 
+suitable for this feature. 
+-->
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+### Additional Context
+<!-- 
+Add any other context about the feature request here. 
+-->
