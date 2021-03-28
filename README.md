@@ -20,7 +20,7 @@ can be easily modified or extended to develop new models.
 - Perke also requires a trained POS tagger model that can be obtained from 
   [here](https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip) and 
   must be put in 
-  [resources](https://github.com/alirezah320/perke/tree/main/perke/resources) 
+  [`resources`](https://github.com/alirezah320/perke/tree/main/perke/resources) 
   directory.
 
 ## Simple Example
@@ -73,3 +73,6 @@ Perke currently, implements the following keyphrase extraction models:
           by Florescu and Caragea, 2017
         - MultipartiteRank: [article](https://www.aclweb.org/anthology/N18-2105.pdf) 
           by Boudin, 2018
+          
+## Acknowledgements
+Perke is inspired by [pke](https://github.com/boudinfl/pke).
