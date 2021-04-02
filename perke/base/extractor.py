@@ -1,10 +1,17 @@
-from collections import defaultdict
 import logging
+from collections import defaultdict
+from typing import (Optional,
+                    Literal,
+                    Set,
+                    List,
+                    Tuple,
+                    Callable)
 
 import nltk
 import hazm
 
-from perke.base.data_structures import Candidate
+from perke.base.data_structures import (Sentence,
+                                        Candidate)
 from perke.base.readers import RawTextReader
 from perke.base.types import WordNormalizationMethod
 from perke.base.functions import is_alphanumeric
@@ -20,28 +27,28 @@ class Extractor:
     word_normalization_method: `str`
         Word normalization method.
 
-    sentences: `list`
+    sentences: `list[Sentence]`
         List of sentence objects of the text
 
-    candidates: `defaultdict`
+    candidates: `defaultdict[str, Candidate]`
         Dict of canonical forms of candidates to candidates, canonical
         form of a candidate is a string joined from normalized words of
         the candidate.
 
-    stopwords: `set`
+    stopwords: `set[str]`
         Set of stopwords
 
-    valid_pos_tags: `set`
+    valid_pos_tags: `set[str]`
         Set of valid part of speech tags.
     """
 
-    def __init__(self, valid_pos_tags=None):
+    def __init__(self, valid_pos_tags: Optional[Set[str]] = None) -> None:
         """
         Initializes the extractor.
 
         Parameters
         ----------
-        valid_pos_tags: `set`
+        valid_pos_tags: `set[str]`, optional
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
@@ -55,10 +62,12 @@ class Extractor:
             self.valid_pos_tags = valid_pos_tags
 
     def load_text(self,
-                  input,
-                  word_normalization_method=WordNormalizationMethod.stemming):
+                  input: str,
+                  word_normalization_method: Literal[WordNormalizationMethod.enums]
+                  = WordNormalizationMethod.stemming
+                  ) -> None:
         """
-        Loads the text of a document or string.
+         Loads the text of a document or string.
 
         Parameters
         ----------
@@ -79,7 +88,11 @@ class Extractor:
 
         self.word_normalization_method = word_normalization_method
 
-    def is_redundant(self, candidate, selected_candidates, minimum_length=1):
+    def is_redundant(self,
+                     candidate: str,
+                     selected_candidates: List[str],
+                     minimum_length: int = 1
+                     ) -> bool:
         """
         Test if a candidate is redundant with respect to a list of
         already selected candidates. A candidate is considered redundant
@@ -89,13 +102,13 @@ class Extractor:
         Parameters
         ----------
         candidate: `str`
-            the canonical form of the candidate
+            The canonical form of the candidate
 
-        selected_candidates: `list`
-            the list of already selected candidates canonical forms
+        selected_candidates: `list[str]`
+            The list of already selected candidates canonical forms
 
         minimum_length: `int`
-            minimum length of the candidate to be considered,
+            Minimum length of the candidate to be considered,
             defaults to `1`.
 
         Returns
@@ -117,9 +130,10 @@ class Extractor:
         return False
 
     def get_n_best(self,
-                   n=10,
-                   remove_redundants=False,
-                   normalized=False):
+                   n: int = 10,
+                   remove_redundants: bool = False,
+                   normalized: bool = False
+                   ) -> List[Tuple[str, float]]:
         """
         Returns the n best candidates.
 
@@ -138,7 +152,7 @@ class Extractor:
 
         Returns
         -------
-        n_best: `list`
+        n_best: `list[(str, int)]`
             List of `(candidate, weight)` tuples, `candidate` can be
             either canonical form or first occurrence joined words.
         """
@@ -191,27 +205,28 @@ class Extractor:
         return n_best
 
     def add_candidate_occurrence(self,
-                                 words,
-                                 offset,
-                                 pos_tags,
-                                 normalized_words):
+                                 words: List[str],
+                                 offset: int,
+                                 pos_tags: List[str],
+                                 normalized_words: List[str]
+                                 ) -> None:
         """
         Adds a new candidate occurrence.
 
         Parameters
         ----------
-        words: `list`
+        words: `list[str]`
             List of words of the occurrence
 
-        normalized_words: `list`
-            List of normalized of words of the occurrence
-
-        pos_tags: `list`
+        pos_tags: `list[str]`
             List of part of speech tags assigned to words of the
             occurrence
 
         offset: `int`
             The offset of the occurrence
+
+        normalized_words: `list[str]`
+            List of normalized of words of the occurrence
         """
 
         # Build the canonical form of the candidate
@@ -223,44 +238,51 @@ class Extractor:
                                                        pos_tags,
                                                        normalized_words)
 
-    def select_candidates_with_longest_pos_sequences(self, valid_pos_tags):
+    def select_candidates_with_longest_pos_sequences(self,
+                                                     valid_pos_tags: Set[str]
+                                                     ) -> None:
         """
         Selects candidates with longest sequences of given part of
         speech tags.
 
         Parameters
         ----------
-        valid_pos_tags: `set`
+        valid_pos_tags: `set[str]`
             Set of valid part of speech tags
         """
         self.select_candidates_with_longest_sequences(
             key=lambda sentence: sentence.pos_tags,
             valid_values=valid_pos_tags)
 
-    def select_candidates_with_longest_keyword_sequences(self, keywords):
+    def select_candidates_with_longest_keyword_sequences(self,
+                                                         keywords: Set[str]
+                                                         ) -> None:
         """
         Selects candidates with longest sequences of given keywords.
 
         Parameters
         ----------
-        keywords: `set`
+        keywords: `set[str]`
             Set of given keywords
         """
         self.select_candidates_with_longest_sequences(
             key=lambda sentence: sentence.normalized_words,
             valid_values=keywords)
 
-    def select_candidates_with_longest_sequences(self, key, valid_values):
+    def select_candidates_with_longest_sequences(self,
+                                                 key: Callable[[Sentence], List[str]],
+                                                 valid_values: Set[str]
+                                                 ) -> None:
         """
         Selects candidates with longest sequences of given values, based
         on `key`.
 
         Parameters
         ----------
-        key: `function`
+        key: `(Sentence) -> list[str]`
             Function that given a sentence and returns a list
 
-        valid_values: `set`
+        valid_values: `set[str]`
             The valid values
         """
 
@@ -296,14 +318,16 @@ class Extractor:
 
             offset_shift += sentence.length
 
-    def select_candidates_with_grammar(self, grammar=None):
+    def select_candidates_with_grammar(self,
+                                       grammar: Optional[str] = None
+                                       ) -> None:
         """
         Selects candidates using nltk RegexpParser with a grammar
         defining noun phrases (NP).
 
         Parameters
         ----------
-        grammar: `str`
+        grammar: `str`, optional
             grammar defining part of speech patterns of noun phrases,
             defaults to::
                 r\"""
@@ -359,19 +383,20 @@ class Extractor:
             offset_shift += sentence.length
 
     def filter_candidates(self,
-                          stopwords=None,
-                          minimum_characters=3,
-                          minimum_word_characters=2,
-                          valid_punctuation_marks='-',
-                          maximum_length=5,
-                          alphanumeric_only=True,
-                          invalid_pos_tags=None):
+                          stopwords: Optional[Set[str]] = None,
+                          minimum_characters: int = 3,
+                          minimum_word_characters: int = 2,
+                          valid_punctuation_marks: str = '-',
+                          maximum_length: int = 5,
+                          alphanumeric_only: bool = True,
+                          invalid_pos_tags: Optional[List[str]] = None
+                          ) -> None:
         """
         Filters the candidates with given conditions.
 
         Parameters
         ----------
-        stopwords: `set`
+        stopwords: `set[str]`, optional
             Set of stopwords, defaults to an empty set.
 
         minimum_characters: `int`
@@ -393,7 +418,7 @@ class Extractor:
             Filters candidates containing non alpha-numeric characters,
             defaults to `True`.
 
-        invalid_pos_tags: `set`
+        invalid_pos_tags: `set[str]`
             Set of unwanted part of speech tags in candidates, defaults
             to an empty set.
         """

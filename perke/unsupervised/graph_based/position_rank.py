@@ -1,4 +1,6 @@
 from collections import defaultdict
+from typing import (Optional,
+                    Set)
 
 import networkx as nx
 
@@ -61,24 +63,28 @@ class PositionRank(SingleRank):
 
     Attributes
     ----------
-    positions: `defaultdict`
+    positions: `defaultdict[str, float]`
         Dict of normalized word to the sums of word's inverse positions
     """
 
-    def __init__(self, valid_pos_tags=None):
+    def __init__(self, valid_pos_tags: Optional[Set[str]] = None):
         """
         Initializes PositionRank.
 
         Parameters
         ----------
-        valid_pos_tags: `set`
+        valid_pos_tags: `set[str]`, optional
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
         super().__init__(valid_pos_tags)
         self.positions = defaultdict(float)
 
-    def select_candidates(self, grammar=None, maximum_length=3, **kwargs):
+    def select_candidates(self,
+                          grammar: Optional[str] = None,
+                          maximum_length: int = 3,
+                          **kwargs
+                          ) -> None:
         """
         Candidate selection heuristic using a syntactic part of speech 
         pattern for noun phrase extraction. Keyphrase candidates are 
@@ -87,7 +93,7 @@ class PositionRank(SingleRank):
 
         Parameters
         ----------
-        grammar: `str`
+        grammar: `str`, optional
             Grammar defining part of speech patterns of noun phrases,
             defaults to::
                 r\"""
@@ -116,7 +122,7 @@ class PositionRank(SingleRank):
 
         self.filter_candidates(maximum_length)
 
-    def build_word_graph(self, window_size=10):
+    def build_word_graph(self, window_size: int = 10) -> None:
         """
         Build the graph representation of the text. In the graph, nodes
         are words that passes a parts of speech filter. Two nodes are
@@ -161,9 +167,10 @@ class PositionRank(SingleRank):
             self.positions[word] += 1 / (position + 1)
 
     def weight_candidates(self,
-                          window_size=10,
-                          normalize_weights=False,
-                          **kwargs):
+                          window_size: int = 10,
+                          normalize_weights: bool = False,
+                          **kwargs
+                          ) -> None:
         """
         Calculates candidates weights using a biased PageRank.
 
@@ -198,7 +205,7 @@ class PositionRank(SingleRank):
             normalize_weights,
             use_position_adjustment=False)
 
-    def filter_candidates(self, maximum_length=3, **kwargs):
+    def filter_candidates(self, maximum_length: int = 3, **kwargs) -> None:
         """
         Filters the candidates with given conditions.
 

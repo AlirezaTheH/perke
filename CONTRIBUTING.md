@@ -227,7 +227,12 @@ Create a pull request and provide the following information by filling in
 - Use the imperative mood ("Move the model to..." not "Moves the models to...")
 
 ### Python
-- All codes should obey [PEP 8](https://www.python.org/dev/peps/pep-0008/).
+- All code should obey **The Zen of Python** according to 
+  [PEP 20](https://www.python.org/dev/peps/pep-0020/).
+- All codes should obey [PEP 8](https://www.python.org/dev/peps/pep-0008/) 
+  style guide.
+- Since Python dropped support for version `2.x`, all code should have type 
+  hints according to [PEP 484](https://www.python.org/dev/peps/pep-0484/). 
 - All strings should be single quote.
 - Use the following import conventions:
   ```python

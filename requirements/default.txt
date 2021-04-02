@@ -1,3 +1,4 @@
 hazm
 networkx
 scipy
+decorators

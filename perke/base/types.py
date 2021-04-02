@@ -1,4 +1,7 @@
-class WordNormalizationMethod:
+from perke.base.enum import Enum
+
+
+class WordNormalizationMethod(Enum):
     """
     Represents a word normalization method.
     """
@@ -6,7 +9,7 @@ class WordNormalizationMethod:
     lemmatization = 'lemmatization'
 
 
-class TopicHeuristic:
+class TopicHeuristic(Enum):
     """
     Represents a heuristic for selecting the best candidate for each topic.
     """
@@ -14,7 +17,7 @@ class TopicHeuristic:
     frequent = 'frequent'
 
 
-class HierarchicalClusteringLinkageMethod:
+class HierarchicalClusteringLinkageMethod(Enum):
     """
     Represents a hierarchical clustering linkage method
     """
@@ -23,7 +26,7 @@ class HierarchicalClusteringLinkageMethod:
     average = 'average'
 
 
-class HierarchicalClusteringMetric:
+class HierarchicalClusteringMetric(Enum):
     """
     Represents a hierarchical clustering metric
     """

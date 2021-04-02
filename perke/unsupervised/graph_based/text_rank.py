@@ -1,3 +1,7 @@
+from typing import (Optional,
+                    Set,
+                    Dict)
+
 import networkx as nx
 
 from perke.base.extractor import Extractor
@@ -58,13 +62,13 @@ class TextRank(Extractor):
         Whether graph edges are weighted
     """
 
-    def __init__(self, valid_pos_tags=None):
+    def __init__(self, valid_pos_tags: Optional[Set[str]] = None) -> None:
         """
         Initializes TextRank.
 
         Parameters
         ----------
-        valid_pos_tags: `set`
+        valid_pos_tags: `set[str]`, optional
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
@@ -72,7 +76,7 @@ class TextRank(Extractor):
         self.graph = nx.Graph()
         self.graph_edges_are_weighted = False
 
-    def select_candidates(self):
+    def select_candidates(self) -> None:
         """
         Selects candidates using longest sequences of certain parts of
         speech.
@@ -82,7 +86,7 @@ class TextRank(Extractor):
         self.select_candidates_with_longest_pos_sequences(
             valid_pos_tags=self.valid_pos_tags)
 
-    def build_word_graph(self, window_size=2):
+    def build_word_graph(self, window_size: int = 2) -> None:
         """
         Builds a graph representation of the text in which nodes are
         words and edges represent co-occurrence relation. Syntactic
@@ -141,9 +145,10 @@ class TextRank(Extractor):
                     else:
                         self.graph.add_edge(first_node, second_node)
 
-    def weight_candidates(self, window_size=2,
-                          top_t_percent=None,
-                          normalize_weights=False):
+    def weight_candidates(self,
+                          window_size: int = 2,
+                          top_t_percent: float = None,
+                          normalize_weights: bool = False) -> None:
         """
         Tailored candidate weighting method for TextRank. Keyphrase
         candidates are either composed from the top T highest weighted
@@ -192,9 +197,10 @@ class TextRank(Extractor):
         self.weight_candidates_with_words_weights(weights, normalize_weights)
 
     def weight_candidates_with_words_weights(self,
-                                             weights,
-                                             normalize_weights,
-                                             use_position_adjustment=True):
+                                             weights: Dict[str, float],
+                                             normalize_weights: bool,
+                                             use_position_adjustment: bool = True
+                                             ) -> None:
         """
         Weights candidates using the sum of their words weights.
 

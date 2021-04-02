@@ -1,4 +1,9 @@
 from itertools import combinations
+from typing import (Optional,
+                    Literal,
+                    Set,
+                    Tuple,
+                    List)
 
 import networkx as nx
 import numpy as np
@@ -69,17 +74,17 @@ class TopicRank(Extractor):
     graph: `nx.Graph`
         The topic graph
 
-    topics: `list`
+    topics: `list[list[str]]`
         List of topics
     """
 
-    def __init__(self, valid_pos_tags=None):
+    def __init__(self, valid_pos_tags: Optional[Set[str]] = None) -> None:
         """
         Initializes TopicRank.
 
         Parameters
         ----------
-        valid_pos_tags: `set`
+        valid_pos_tags: `set[str]`, optional
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
@@ -88,7 +93,7 @@ class TopicRank(Extractor):
         self.graph = nx.Graph()
         self.topics = []
 
-    def select_candidates(self):
+    def select_candidates(self) -> None:
         """
         Selects longest sequences of nouns and adjectives as keyphrase
         candidates.
@@ -101,13 +106,13 @@ class TopicRank(Extractor):
         # Filter candidates containing stopwords or punctuation marks
         self.filter_candidates(stopwords=self.stopwords)
 
-    def vectorize_candidates(self):
+    def vectorize_candidates(self) -> Tuple[List[str], np.ndarray]:
         """
         Vectorize the keyphrase candidates.
 
         Returns
         -------
-        candidates: `list`
+        candidates: `list[str]`
             The list of candidates (canonical forms).
 
         candidate_matrix: `np.ndarray`
@@ -134,9 +139,12 @@ class TopicRank(Extractor):
 
     def cluster_topics(
             self,
-            threshold=0.74,
-            metric=HierarchicalClusteringMetric.jaccard,
-            linkage_method=HierarchicalClusteringLinkageMethod.average):
+            threshold: float = 0.74,
+            metric: Literal[HierarchicalClusteringMetric.enums]
+            = HierarchicalClusteringMetric.jaccard,
+            linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
+            = HierarchicalClusteringLinkageMethod.average
+    ) -> None:
         """
         Clusters candidates into topics.
 
@@ -181,7 +189,7 @@ class TopicRank(Extractor):
             self.topics.append([candidates[j] for j in range(len(flat_clusters))
                                 if flat_clusters[j] == cluster_id])
 
-    def build_topic_graph(self):
+    def build_topic_graph(self) -> None:
         """
         Build topic graph.
         """
@@ -208,10 +216,14 @@ class TopicRank(Extractor):
 
     def weight_candidates(
             self,
-            threshold=0.74,
-            metric=HierarchicalClusteringMetric.jaccard,
-            linkage_method=HierarchicalClusteringLinkageMethod.average,
-            topic_heuristic=TopicHeuristic.first_occurring):
+            threshold: float = 0.74,
+            metric: Literal[HierarchicalClusteringMetric.enums]
+            = HierarchicalClusteringMetric.jaccard,
+            linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
+            = HierarchicalClusteringLinkageMethod.average,
+            topic_heuristic: Literal[TopicHeuristic.enums]
+            = TopicHeuristic.first_occurring
+    ) -> None:
         """
         Candidate ranking using random walk.
 

@@ -1,3 +1,6 @@
+from typing import (Optional,
+                    Set)
+
 import networkx as nx
 
 from perke.unsupervised.graph_based.text_rank import TextRank
@@ -53,7 +56,7 @@ class SingleRank(TextRank):
         Whether graph edges are weighted
     """
 
-    def __init__(self, valid_pos_tags=None):
+    def __init__(self, valid_pos_tags: Optional[Set[str]] = None) -> None:
         """
         initializes SingleRank.
 
@@ -66,7 +69,7 @@ class SingleRank(TextRank):
         super().__init__(valid_pos_tags)
         self.graph_edges_are_weighted = True
 
-    def build_word_graph(self, window_size=10):
+    def build_word_graph(self, window_size: int = 10) -> None:
         """
         Builds a graph representation of the text just like TextRank
         except that edges in SingleRank graph are weighted and the
@@ -82,9 +85,10 @@ class SingleRank(TextRank):
         super().build_word_graph(window_size)
 
     def weight_candidates(self,
-                          window_size=10,
-                          normalize_weights=False,
-                          **kwargs):
+                          window_size: int = 10,
+                          normalize_weights: bool = False,
+                          **kwargs
+                          ) -> None:
         """
         Weights candidates using the weighted variant of the TextRank
         formulae. Candidates are weighted by the sum of the weights of

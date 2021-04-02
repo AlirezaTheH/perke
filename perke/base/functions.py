@@ -1,11 +1,11 @@
-def is_alphanumeric(word, valid_punctuation_marks='-'):
+def is_alphanumeric(word: str, valid_punctuation_marks: str = '-') -> bool:
     """
     Check if a word contains only alpha-numeric
     characters and valid punctuation marks.
 
     Parameters
     ----------
-    word: `string`
+    word: `str`
         The given word
 
     valid_punctuation_marks: `str`

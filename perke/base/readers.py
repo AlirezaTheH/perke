@@ -1,6 +1,8 @@
 from os.path import (join,
                      dirname,
                      isfile)
+from typing import (Literal,
+                    List)
 
 import hazm
 
@@ -30,7 +32,9 @@ class Reader:
         The hazm pos tagger instance
     """
 
-    def __init__(self, word_normalization_method):
+    def __init__(self,
+                 word_normalization_method: Literal[WordNormalizationMethod.enums]
+                 ) -> None:
         """
         Initializes the reader.
 
@@ -62,7 +66,10 @@ class RawTextReader(Reader):
         Raw text to read sentences from
     """
 
-    def __init__(self, input, word_normalization_method):
+    def __init__(self,
+                 input: str,
+                 word_normalization_method: Literal[WordNormalizationMethod.enums]
+                 ) -> None:
         """
         Initializes the reader.
 
@@ -73,7 +80,7 @@ class RawTextReader(Reader):
 
         word_normalization_method: `str`
             Word normalization method, see
-            'perke.base.types.WordNormalizationMethod` for available
+            `perke.base.types.WordNormalizationMethod` for available
             methods.
         """
 
@@ -88,13 +95,13 @@ class RawTextReader(Reader):
         else:
             self.text = input
 
-    def read(self):
+    def read(self) -> List[Sentence]:
         """
         Reads the input and uses hazm to preprocess.
 
         Returns
         -------
-        sentences: `list`
+        sentences: `list[Sentence]`
             List of sentences
         """
         word_normalization_method = self.word_normalization_method

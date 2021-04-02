@@ -1,5 +1,8 @@
 import math
 from itertools import combinations
+from typing import (Optional,
+                    Literal,
+                    Set)
 
 import networkx as nx
 
@@ -63,20 +66,20 @@ class MultipartiteRank(TopicRank):
 
     Attributes
     ----------
-    topic_ids: dict
+    topic_ids: `dict[str, int]`
         Dict of canonical forms of candidates to to topic identifiers
 
     graph: `nx.DiGraph`
         The candidate graph
     """
 
-    def __init__(self, valid_pos_tags=None):
+    def __init__(self, valid_pos_tags: Optional[Set[str]] = None) -> None:
         """
         Initializes  MultipartiteRank.
 
         Parameters
         ----------
-        valid_pos_tags: `set`
+        valid_pos_tags: `set[str]`, optional
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
@@ -87,9 +90,12 @@ class MultipartiteRank(TopicRank):
 
     def cluster_topics(
             self,
-            threshold=0.74,
-            metric=HierarchicalClusteringMetric.jaccard,
-            linkage_method=HierarchicalClusteringLinkageMethod.average):
+            threshold: float = 0.74,
+            metric: Literal[HierarchicalClusteringMetric.enums]
+            = HierarchicalClusteringMetric.jaccard,
+            linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
+            = HierarchicalClusteringLinkageMethod.average
+    ) -> None:
         """
         Clustering candidates into topics.
 
@@ -122,7 +128,7 @@ class MultipartiteRank(TopicRank):
             for c in topic:
                 self.topic_ids[c] = topic_id
 
-    def build_topic_graph(self):
+    def build_topic_graph(self) -> None:
         """
         Build the Multipartite graph.
         """
@@ -161,7 +167,7 @@ class MultipartiteRank(TopicRank):
                 # node_j -> node_i
                 self.graph.add_edge(node_j, node_i, weight=sum(weights))
 
-    def weight_adjustment(self, alpha=1.1):
+    def weight_adjustment(self, alpha: float = 1.1) -> None:
         """
         Adjust edge weights for boosting some candidates.
 
@@ -208,9 +214,12 @@ class MultipartiteRank(TopicRank):
     def weight_candidates(
             self,
             threshold=0.74,
-            metric=HierarchicalClusteringMetric.jaccard,
-            linkage_method=HierarchicalClusteringLinkageMethod.average,
-            alpha=1.1):
+            metric: Literal[HierarchicalClusteringMetric.enums]
+            = HierarchicalClusteringMetric.jaccard,
+            linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
+            = HierarchicalClusteringLinkageMethod.average,
+            alpha: float = 1.1
+    ) -> None:
         """
         Candidate weight calculation using random walk.
 
