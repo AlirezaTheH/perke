@@ -1,7 +1,7 @@
 Hello there! Welcome. Please follow the steps below to tell us about your contribution:
 
 1. Copy the correct template for your contribution
-  - Are you fixing a bug? Copy the template 
+  - Are you fixing a bug? Copy the template
     [here](https://raw.githubusercontent.com/alirezah320/perke/main/.github/PULL_REQUEST_TEMPLATE/bug_fix.md).
   - Are you updating documentation? Copy the template
     [here](https://raw.githubusercontent.com/alirezah320/perke/main/.github/PULL_REQUEST_TEMPLATE/documentation_change.md).

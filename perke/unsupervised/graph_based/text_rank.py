@@ -1,6 +1,4 @@
-from typing import (Optional,
-                    Set,
-                    Dict)
+from typing import Dict, Optional, Set
 
 import networkx as nx
 
@@ -21,6 +19,8 @@ class TextRank(Extractor):
     (here a window of 2 words). Nodes are weighted by the TextRank
     graph-based weighting algorithm in its unweighted variant.
 
+    Note
+    ----
     Implementation of the TextRank model for keyword extraction
     described in:
 
@@ -29,8 +29,8 @@ class TextRank(Extractor):
       <http://www.aclweb.org/anthology/W04-3252.pdf>`_
     | In Proceedings of EMNLP, 2004
 
-    Examples
-    --------
+    Example
+    -------
     .. code:: python
 
         from perke.unsupervised.graph_based import TextRank
@@ -81,7 +81,6 @@ class TextRank(Extractor):
         Selects candidates using longest sequences of certain parts of
         speech.
         """
-
         # Select sequences of words with valid pos tags
         self.select_candidates_with_longest_pos_sequences(
             valid_pos_tags=self.valid_pos_tags)
@@ -108,7 +107,6 @@ class TextRank(Extractor):
             The size of window for connecting two words in the graph,
             defaults to `2`.
         """
-
         # Flatten text as a sequence of (word, is_valid) tuples
         flatten_text = []
         for sentence in self.sentences:
@@ -147,8 +145,9 @@ class TextRank(Extractor):
 
     def weight_candidates(self,
                           window_size: int = 2,
-                          top_t_percent: float = None,
-                          normalize_weights: bool = False) -> None:
+                          top_t_percent: Optional[float] = None,
+                          normalize_weights: bool = False,
+                          ) -> None:
         """
         Tailored candidate weighting method for TextRank. Keyphrase
         candidates are either composed from the top T highest weighted
@@ -169,7 +168,6 @@ class TextRank(Extractor):
             Whether normalize keyphrase weight by their length, defaults
             to `False`.
         """
-
         # Build the word graph
         self.build_word_graph(window_size)
 
@@ -182,7 +180,6 @@ class TextRank(Extractor):
 
         # Generate the phrases from the T-percent top weighted words
         if top_t_percent is not None:
-
             # Computing the number of top keywords
             number_of_nodes = self.graph.number_of_nodes()
             to_keep = int(number_of_nodes * top_t_percent)
@@ -192,15 +189,16 @@ class TextRank(Extractor):
 
             # Creating keyphrases from the T top words
             self.select_candidates_with_longest_keyword_sequences(
-                keywords=sorted_weights[:int(to_keep)])
+                keywords=set(sorted_weights[:int(to_keep)]))
 
         self.weight_candidates_with_words_weights(weights, normalize_weights)
 
-    def weight_candidates_with_words_weights(self,
-                                             weights: Dict[str, float],
-                                             normalize_weights: bool,
-                                             use_position_adjustment: bool = True
-                                             ) -> None:
+    def weight_candidates_with_words_weights(
+            self,
+            weights: Dict[str, float],
+            normalize_weights: bool,
+            use_position_adjustment: bool = True,
+    ) -> None:
         """
         Weights candidates using the sum of their words weights.
 
@@ -216,7 +214,6 @@ class TextRank(Extractor):
             Whether use candidate position to adjust weights,
             defaults to `True`.
         """
-
         for candidate in self.candidates.values():
             candidate.weight = sum([weights.get(word, 0.0)
                                     for word in candidate.normalized_words])

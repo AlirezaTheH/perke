@@ -1,13 +1,10 @@
-from os.path import (join,
-                     dirname,
-                     isfile)
-from typing import (Literal,
-                    List)
+from os.path import dirname, isfile, join
+from typing import List, Literal
 
 import hazm
 
-from perke.base.types import WordNormalizationMethod
 from perke.base.data_structures import Sentence
+from perke.base.types import WordNormalizationMethod
 
 
 class Reader:
@@ -45,7 +42,6 @@ class Reader:
             `perke.base.types.WordNormalizationMethod` for available
             methods.
         """
-
         self.word_normalization_method = word_normalization_method
         self.normalizer = hazm.Normalizer()
         self.stemmer = hazm.Stemmer()
@@ -83,7 +79,6 @@ class RawTextReader(Reader):
             `perke.base.types.WordNormalizationMethod` for available
             methods.
         """
-
         super().__init__(word_normalization_method)
 
         # If input is a filepath

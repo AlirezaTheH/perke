@@ -1,5 +1,4 @@
-from typing import (Optional,
-                    Set)
+from typing import Optional, Set
 
 import networkx as nx
 
@@ -13,6 +12,8 @@ class SingleRank(TextRank):
     This model is an extension of the TextRank model that uses the
     number of co-occurrences to weight edges in the graph.
 
+    Note
+    ----
     Implementation of the SingleRank model described in:
 
     | Xiaojun Wan and Jianguo Xiao
@@ -58,7 +59,7 @@ class SingleRank(TextRank):
 
     def __init__(self, valid_pos_tags: Optional[Set[str]] = None) -> None:
         """
-        initializes SingleRank.
+        Initializes SingleRank.
 
         Parameters
         ----------
@@ -87,7 +88,7 @@ class SingleRank(TextRank):
     def weight_candidates(self,
                           window_size: int = 10,
                           normalize_weights: bool = False,
-                          **kwargs
+                          **kwargs,
                           ) -> None:
         """
         Weights candidates using the weighted variant of the TextRank
@@ -104,7 +105,6 @@ class SingleRank(TextRank):
             Whether normalize keyphrase weight by their length, defaults
             to `False`.
         """
-
         # Build the word graph
         self.build_word_graph(window_size)
 

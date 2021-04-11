@@ -1,0 +1,58 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: double-quote-string-fixer
+  - repo: https://github.com/pycqa/isort
+    rev: 5.8.0
+    hooks:
+      - id: isort
+        args: [--multi-line=VERTICAL]
+  - repo: https://github.com/PyCQA/flake8
+    rev: 3.9.0
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-docstrings
+          - flake8-annotations
+        args:
+          - --max-line-length=88
+          - --max-doc-length=79
+          - --docstring-convention=numpy
+          # E226 missing whitespace around arithmetic operator
+          # W503 line break before binary operator
+          # D100 Missing docstring in public module
+          # D104 Missing docstring in public package
+          # D105 Missing docstring in magic method
+          # D200 One-line docstring should fit on one line with quotes
+          # D205 1 blank line required between summary line and description
+          # D300 Use “””triple double quotes”””
+          # D301 Use r""" if any backslashes in a docstring
+          # D400 First line should end with a period
+          # D401 First line should be in imperative mood
+          # ANN003 Missing type annotation for **kwargs
+          # ANN101 Missing type annotation for self in method
+          # ANN102 Missing type annotation for cls in classmethod
+          - --ignore=
+            - E226
+            - W503
+            - D100
+            - D104
+            - D105
+            - D200
+            - D205
+            - D300
+            - D301
+            - D400
+            - D401
+            - ANN003
+            - ANN101
+            - ANN102
+        exclude: |
+          (?x)(
+              __init__|
+              tests
+          )

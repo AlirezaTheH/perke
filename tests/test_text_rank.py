@@ -1,7 +1,7 @@
 from perke.unsupervised.graph_based import TextRank
 
 
-def test_original_article_default(text):
+def test_original_article_default(text: str) -> None:
     extractor = TextRank()
     extractor.load_text(input=text)
     extractor.weight_candidates(top_t_percent=0.33)
@@ -12,7 +12,7 @@ def test_original_article_default(text):
                           'زمینه درک زبان طبیعی']
 
 
-def test_with_candidate_selection(text):
+def test_with_candidate_selection(text: str) -> None:
     extractor = TextRank()
     extractor.load_text(input=text)
     extractor.select_candidates()

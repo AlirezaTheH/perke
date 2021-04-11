@@ -1,10 +1,9 @@
-from os.path import (join,
-                     dirname)
+from os.path import dirname, join
 
-from perke.unsupervised.graph_based import MultipartiteRank
-from perke.base.types import (WordNormalizationMethod,
+from perke.base.types import (HierarchicalClusteringLinkageMethod,
                               HierarchicalClusteringMetric,
-                              HierarchicalClusteringLinkageMethod)
+                              WordNormalizationMethod)
+from perke.unsupervised.graph_based import MultipartiteRank
 
 # Define the set of valid part of speech tags to occur in the model.
 valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}

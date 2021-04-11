@@ -1,14 +1,12 @@
 import math
 from itertools import combinations
-from typing import (Optional,
-                    Literal,
-                    Set)
+from typing import Literal, Optional, Set
 
 import networkx as nx
 
+from perke.base.types import (HierarchicalClusteringLinkageMethod,
+                              HierarchicalClusteringMetric)
 from perke.unsupervised.graph_based.topic_rank import TopicRank
-from perke.base.types import (HierarchicalClusteringMetric,
-                              HierarchicalClusteringLinkageMethod)
 
 
 class MultipartiteRank(TopicRank):
@@ -20,6 +18,8 @@ class MultipartiteRank(TopicRank):
     a single graph and exploits their mutually reinforcing relationship
     to improve candidate ranking.
 
+    Note
+    ----
     Implementation of the MultipartiteRank described in:
 
     | Florian Boudin
@@ -83,7 +83,6 @@ class MultipartiteRank(TopicRank):
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
-
         super().__init__(valid_pos_tags)
         self.topic_ids = {}
         self.graph = nx.DiGraph()
@@ -94,7 +93,7 @@ class MultipartiteRank(TopicRank):
             metric: Literal[HierarchicalClusteringMetric.enums]
             = HierarchicalClusteringMetric.jaccard,
             linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
-            = HierarchicalClusteringLinkageMethod.average
+            = HierarchicalClusteringLinkageMethod.average,
     ) -> None:
         """
         Clustering candidates into topics.
@@ -132,7 +131,6 @@ class MultipartiteRank(TopicRank):
         """
         Build the Multipartite graph.
         """
-
         # Adding the nodes to the graph
         self.graph.add_nodes_from(self.candidates.keys())
 
@@ -158,7 +156,7 @@ class MultipartiteRank(TopicRank):
                     if p_j < p_i:
                         gap -= len(candidate_j.normalized_words) - 1
 
-                    weights.append(1.0 / gap)
+                    weights.append(1.0/gap)
 
             # Add weighted edges
             if weights:
@@ -177,7 +175,6 @@ class MultipartiteRank(TopicRank):
             Hyper-parameter that controls the strength of the weight
             adjustment, defaults to `1.1`.
         """
-
         weighted_edges = {}
 
         # Topical boosting
@@ -207,18 +204,18 @@ class MultipartiteRank(TopicRank):
         # Update edge weights
         for nodes, boosters in weighted_edges.items():
             node_i, node_j = nodes
-            position_i = 1.0 / (1 + self.candidates[node_i].offsets[0])
+            position_i = 1.0/(1 + self.candidates[node_i].offsets[0])
             position_i = math.exp(position_i)
-            self.graph[node_j][node_i]['weight'] += boosters * alpha * position_i
+            self.graph[node_j][node_i]['weight'] += boosters*alpha*position_i
 
     def weight_candidates(
             self,
-            threshold=0.74,
+            threshold: float = 0.74,
             metric: Literal[HierarchicalClusteringMetric.enums]
             = HierarchicalClusteringMetric.jaccard,
             linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
             = HierarchicalClusteringLinkageMethod.average,
-            alpha: float = 1.1
+            alpha: float = 1.1,
     ) -> None:
         """
         Candidate weight calculation using random walk.
@@ -243,7 +240,6 @@ class MultipartiteRank(TopicRank):
             Hyper-parameter that controls the strength of the
             weight adjustment, defaults to `1.1`
         """
-
         # Cluster the candidates
         self.cluster_topics(threshold=threshold, linkage_method=linkage_method)
 

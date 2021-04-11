@@ -1,5 +1,4 @@
-from os.path import (join,
-                     dirname)
+from os.path import dirname, join
 
 from perke.unsupervised.graph_based import PositionRank
 

@@ -1,7 +1,7 @@
 import re
 from os.path import join
-from setuptools import (setup,
-                        find_packages)
+
+from setuptools import find_packages, setup
 
 packages = find_packages(exclude=['tests*'])
 

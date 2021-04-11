@@ -1,10 +1,10 @@
+from os.path import dirname, join
+
 import pytest
-from os.path import (join,
-                     dirname)
 
 
 @pytest.fixture(scope='session')
-def text():
+def text() -> str:
     input_filepath = join(dirname(dirname(__file__)),
                           'examples',
                           'input.txt')

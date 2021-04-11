@@ -1,5 +1,5 @@
-Base Classes and Utils
-========================
+Base Perke Utils
+==============================
 Extractor
 ---------
 .. automodule:: perke.base.extractor
@@ -24,8 +24,3 @@ Types
 .. automodule:: perke.base.types
     :members:
     :undoc-members:
-
-Functions
----------
-.. automodule:: perke.base.functions
-    :members:

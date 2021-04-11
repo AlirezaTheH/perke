@@ -11,9 +11,9 @@
 # relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
 
-from os.path import dirname, join
-import sys
 import re
+import sys
+from os.path import dirname, join
 
 root = dirname(dirname(__file__))
 sys.path.insert(0, root)
@@ -46,6 +46,8 @@ extensions = ['sphinx.ext.autodoc',
 napoleon_use_ivar = True
 napoleon_include_init_with_doc = True
 napoleon_use_admonition_for_examples = True
+napoleon_use_admonition_for_notes = True
+napoleon_use_admonition_for_references = True
 napoleon_use_rtype = False
 
 # Change the default role so we can avoid prefixing everything

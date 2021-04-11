@@ -1,13 +1,11 @@
-from dataclasses import (dataclass,
-                         field)
-from typing import (Literal,
-                    List)
+from dataclasses import dataclass, field
+from typing import List
 
 
 @dataclass
 class Sentence:
     """
-    The sentence data structure
+    Represents a sentence data structure.
 
     Attributes
     ----------
@@ -26,23 +24,22 @@ class Sentence:
     normalized_words: List[str]
 
     @property
-    def length(self):
+    def length(self) -> int:
         """
-        Gets number of words
+        Gets number of words.
 
         Returns
         -------
         length: `int`
             Number of words
         """
-
         return len(self.words)
 
 
 @dataclass
 class Candidate:
     """
-    The keyphrase candidate data structure
+    Represents a keyphrase candidate data structure.
 
     Attributes
     ----------
@@ -74,14 +71,13 @@ class Candidate:
     @property
     def length(self) -> int:
         """
-        Gets number of normalized words
+        Gets number of normalized words.
 
         Returns
         -------
         length: `int`
             Number of normalized words
         """
-
         return len(self.normalized_words)
 
     def add_occurrence(self,

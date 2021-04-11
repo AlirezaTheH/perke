@@ -1,21 +1,15 @@
 import logging
 from collections import defaultdict
-from typing import (Optional,
-                    Literal,
-                    Set,
-                    List,
-                    Tuple,
-                    Callable)
+from typing import Callable, List, Literal, Optional, Set, Tuple
 
-import nltk
 import hazm
+import nltk
 
-from perke.base.data_structures import (Sentence,
-                                        Candidate)
+from perke.base.data_structures import Candidate, Sentence
 from perke.base.readers import RawTextReader
 from perke.base.types import WordNormalizationMethod
-from perke.base.functions import is_alphanumeric
-from perke.base.string import punctuation_marks
+from perke.utils.functions import is_alphanumeric
+from perke.utils.string import punctuation_marks
 
 
 class Extractor:
@@ -63,11 +57,12 @@ class Extractor:
 
     def load_text(self,
                   input: str,
-                  word_normalization_method: Literal[WordNormalizationMethod.enums]
-                  = WordNormalizationMethod.stemming
+                  word_normalization_method:
+                  Optional[Literal[WordNormalizationMethod.enums]]
+                  = WordNormalizationMethod.stemming,
                   ) -> None:
         """
-         Loads the text of a document or string.
+        Loads the text of a document or string.
 
         Parameters
         ----------
@@ -79,7 +74,6 @@ class Extractor:
             `perke.base.types.WordNormalizationMethod` for available
             methods.
         """
-
         # Initialize reader
         reader = RawTextReader(input, word_normalization_method)
 
@@ -91,7 +85,7 @@ class Extractor:
     def is_redundant(self,
                      candidate: str,
                      selected_candidates: List[str],
-                     minimum_length: int = 1
+                     minimum_length: int = 1,
                      ) -> bool:
         """
         Test if a candidate is redundant with respect to a list of
@@ -116,7 +110,6 @@ class Extractor:
         result: `bool`
             The result
         """
-
         # Only consider candidate with length greater than minimum
         # length
         if self.candidates[candidate].length < minimum_length:
@@ -132,7 +125,7 @@ class Extractor:
     def get_n_best(self,
                    n: int = 10,
                    remove_redundants: bool = False,
-                   normalized: bool = False
+                   normalized: bool = False,
                    ) -> List[Tuple[str, float]]:
         """
         Returns the n best candidates.
@@ -156,7 +149,6 @@ class Extractor:
             List of `(candidate, weight)` tuples, `candidate` can be
             either canonical form or first occurrence joined words.
         """
-
         # Sort candidates by descending weight
         bests = sorted(self.candidates,
                        key=lambda c: self.candidates[c].weight,
@@ -208,7 +200,7 @@ class Extractor:
                                  words: List[str],
                                  offset: int,
                                  pos_tags: List[str],
-                                 normalized_words: List[str]
+                                 normalized_words: List[str],
                                  ) -> None:
         """
         Adds a new candidate occurrence.
@@ -228,7 +220,6 @@ class Extractor:
         normalized_words: `list[str]`
             List of normalized of words of the occurrence
         """
-
         # Build the canonical form of the candidate
         canonical_form = ' '.join(normalized_words)
 
@@ -239,7 +230,7 @@ class Extractor:
                                                        normalized_words)
 
     def select_candidates_with_longest_pos_sequences(self,
-                                                     valid_pos_tags: Set[str]
+                                                     valid_pos_tags: Set[str],
                                                      ) -> None:
         """
         Selects candidates with longest sequences of given part of
@@ -255,7 +246,7 @@ class Extractor:
             valid_values=valid_pos_tags)
 
     def select_candidates_with_longest_keyword_sequences(self,
-                                                         keywords: Set[str]
+                                                         keywords: Set[str],
                                                          ) -> None:
         """
         Selects candidates with longest sequences of given keywords.
@@ -271,7 +262,7 @@ class Extractor:
 
     def select_candidates_with_longest_sequences(self,
                                                  key: Callable[[Sentence], List[str]],
-                                                 valid_values: Set[str]
+                                                 valid_values: Set[str],
                                                  ) -> None:
         """
         Selects candidates with longest sequences of given values, based
@@ -285,7 +276,6 @@ class Extractor:
         valid_values: `set[str]`
             The valid values
         """
-
         # Loop through the sentences
         offset_shift = 0
         for i, sentence in enumerate(self.sentences):
@@ -319,7 +309,7 @@ class Extractor:
             offset_shift += sentence.length
 
     def select_candidates_with_grammar(self,
-                                       grammar: Optional[str] = None
+                                       grammar: Optional[str] = None,
                                        ) -> None:
         """
         Selects candidates using nltk RegexpParser with a grammar
@@ -338,7 +328,6 @@ class Extractor:
                     <N>}{<.*e?>'
                 \"""
         """
-
         # Initialize default grammar if none provided
         if grammar is None:
             grammar = r"""
@@ -389,7 +378,7 @@ class Extractor:
                           valid_punctuation_marks: str = '-',
                           maximum_length: int = 5,
                           alphanumeric_only: bool = True,
-                          invalid_pos_tags: Optional[List[str]] = None
+                          invalid_pos_tags: Optional[Set[str]] = None,
                           ) -> None:
         """
         Filters the candidates with given conditions.
@@ -422,7 +411,6 @@ class Extractor:
             Set of unwanted part of speech tags in candidates, defaults
             to an empty set.
         """
-
         if stopwords is None:
             stopwords = set()
 

@@ -16,7 +16,6 @@ def is_alphanumeric(word: str, valid_punctuation_marks: str = '-') -> bool:
     result: `bool`
         The result
     """
-
     for punctuation_mark in valid_punctuation_marks.split():
         word = word.replace(punctuation_mark, '')
     return word.isalnum()

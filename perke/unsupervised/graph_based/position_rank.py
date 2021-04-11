@@ -1,6 +1,5 @@
 from collections import defaultdict
-from typing import (Optional,
-                    Set)
+from typing import Optional, Set
 
 import networkx as nx
 
@@ -11,10 +10,12 @@ class PositionRank(SingleRank):
     """
     PositionRank keyphrase extractor
 
-    This model is an unsupervised approach to extract keyphrases from 
-    scholarly documents that incorporates information from all positions 
+    This model is an unsupervised approach to extract keyphrases from
+    scholarly documents that incorporates information from all positions
     of a word's occurrences into a biased PageRank.
 
+    Note
+    ----
     Implementation of the PositionRank described in:
 
     | Corina Florescu and Cornelia Caragea
@@ -67,7 +68,7 @@ class PositionRank(SingleRank):
         Dict of normalized word to the sums of word's inverse positions
     """
 
-    def __init__(self, valid_pos_tags: Optional[Set[str]] = None):
+    def __init__(self, valid_pos_tags: Optional[Set[str]] = None) -> None:
         """
         Initializes PositionRank.
 
@@ -83,12 +84,12 @@ class PositionRank(SingleRank):
     def select_candidates(self,
                           grammar: Optional[str] = None,
                           maximum_length: int = 3,
-                          **kwargs
+                          **kwargs,
                           ) -> None:
         """
-        Candidate selection heuristic using a syntactic part of speech 
-        pattern for noun phrase extraction. Keyphrase candidates are 
-        noun phrases that match the regular expression 
+        Candidate selection heuristic using a syntactic part of speech
+        pattern for noun phrase extraction. Keyphrase candidates are
+        noun phrases that match the regular expression
         (adjective)*(noun)+, with a given length.
 
         Parameters
@@ -107,7 +108,6 @@ class PositionRank(SingleRank):
         maximum_length: `int`
             Maximum length in words of the candidate, defaults to `3`.
         """
-
         if grammar is None:
             grammar = r"""
                 NP:
@@ -137,7 +137,6 @@ class PositionRank(SingleRank):
             The size of window for connecting two words in the graph,
             defaults to `10`.
         """
-
         # Flatten text as a sequence of only passed syntactic filter
         # (word, position) tuples
         flatten_text = []
@@ -164,12 +163,12 @@ class PositionRank(SingleRank):
 
         # Compute the sums of the word's inverse positions
         for word, position in flatten_text:
-            self.positions[word] += 1 / (position + 1)
+            self.positions[word] += 1/(position + 1)
 
     def weight_candidates(self,
                           window_size: int = 10,
                           normalize_weights: bool = False,
-                          **kwargs
+                          **kwargs,
                           ) -> None:
         """
         Calculates candidates weights using a biased PageRank.
@@ -184,7 +183,6 @@ class PositionRank(SingleRank):
             Normalize keyphrase weight by their length, defaults to
             `False`.
         """
-
         # Build the word graph
         self.build_word_graph(window_size)
 

@@ -1,7 +1,7 @@
 from perke.unsupervised.graph_based import PositionRank
 
 
-def test_original_article_default(text):
+def test_original_article_default(text: str) -> None:
     extractor = PositionRank()
     extractor.load_text(input=text)
     extractor.select_candidates()
