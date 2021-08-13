@@ -1,3 +1,5 @@
 hazm
 networkx
 scipy
+typer
+PyGithub
