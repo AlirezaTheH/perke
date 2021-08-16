@@ -12,8 +12,8 @@ before_install:
 
 install:
   - pip install -r requirements/default.txt
-  - wget https://github.com/sobhe/hazm/releases/download/v0.5/resources-0.5.zip
-  - unzip resources-0.5.zip -d perke/resources
+  - python setup.py install
+  - python -m perke download
 
 script:
   - pytest
