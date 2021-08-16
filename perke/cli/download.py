@@ -7,7 +7,25 @@ import typer
 from github import Github
 from github.GitReleaseAsset import GitReleaseAsset
 
-from perke.commands.base import app
+from perke.cli.base import app
+
+
+@app.command('download')
+def download_command() -> None:
+    """
+    Downloads latest resources (tagger and parser models) that Perke
+    needs.
+    """
+    download()
+
+
+def download() -> None:
+    """
+    Function version of `download_command` to be available in the package.
+    """
+    asset = get_latest_resources_asset()
+    extract_path = join(dirname(dirname(__file__)), 'resources')
+    download_and_extract_asset(asset, extract_path)
 
 
 def get_latest_resources_asset() -> GitReleaseAsset:
@@ -54,14 +72,3 @@ def download_and_extract_asset(asset: GitReleaseAsset,
                 with ZipFile(io_file) as zip_file:
                     zip_file.extractall(path=extract_path)
     typer.echo('Download completed.')
-
-
-@app.command()
-def download() -> None:
-    """
-    Download latest resources (tagger and parser models) that Perke
-    needs.
-    """
-    asset = get_latest_resources_asset()
-    extract_to = join(dirname(dirname(__file__)), 'resources')
-    download_and_extract_asset(asset, extract_to)

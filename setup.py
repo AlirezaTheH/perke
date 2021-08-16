@@ -30,7 +30,7 @@ setup(name='perke',
       author_email='alirezah320@yahoo.com',
       packages=packages,
       entry_points={
-          'console_scripts': ['perke = perke.commands:setup_commands']
+          'console_scripts': ['perke = perke.cli:setup_cli']
       },
       keywords=[
           'nlp',

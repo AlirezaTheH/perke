@@ -24,7 +24,7 @@ can be easily modified or extended to develop new models.
   python -m perke download
   ```
   Alternatively, you can use another model with same tag names and structure,
-  and put it in
+  and put it in the
   [`resources`](https://github.com/alirezah320/perke/tree/main/perke/resources)
   directory.
 
