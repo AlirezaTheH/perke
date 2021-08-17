@@ -18,8 +18,9 @@ can be easily modified or extended to develop new models.
   pip install git+https://github.com/alirezah320/perke.git
   ```
 - Perke also requires a trained POS tagger model. We use
-  [hazm's](https://github.com/sobhe/hazm) tagger model.
-  You can download this model using the following command:
+  [hazm's](https://github.com/sobhe/hazm) tagger model. You can easily download
+  latest [hazm's](https://github.com/sobhe/hazm) resources (tagger and parser
+  models) using the following command:
   ```bash
   python -m perke download
   ```
