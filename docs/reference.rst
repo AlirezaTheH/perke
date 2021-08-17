@@ -6,3 +6,4 @@ Reference
     utils
     base
     unsupervised
+    cli
