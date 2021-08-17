@@ -13,8 +13,9 @@ from perke.cli.base import app
 @app.command('download')
 def download_command() -> None:
     """
-    Downloads latest resources (tagger and parser models) that Perke
-    needs.
+    Perke requires a trained POS tagger model. We use hazm's tagger model.
+    This command aims to easily download latest hazm's resources (tagger
+    and parser models).
     """
     download()
 
@@ -30,7 +31,7 @@ def download() -> None:
 
 def get_latest_resources_asset() -> GitReleaseAsset:
     """
-    Searches through hazm releases and find latest release that contains
+    Searches through hazm's releases and find latest release that contains
     resources.
 
     Returns
