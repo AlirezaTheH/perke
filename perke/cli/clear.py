@@ -9,7 +9,7 @@ from perke.cli.base import app
 @app.command('clear')
 def clear_command() -> None:
     """
-    Clears the resources directory.
+    Clears the resources directory from downloaded files.
     """
     clear()
 

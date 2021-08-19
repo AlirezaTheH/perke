@@ -29,9 +29,7 @@ setup(name='perke',
       author='Alireza Hosseini',
       author_email='alirezah320@yahoo.com',
       packages=packages,
-      entry_points={
-          'console_scripts': ['perke = perke.cli:setup_cli']
-      },
+      entry_points={'console_scripts': ['perke = perke.cli:setup_cli']},
       keywords=[
           'nlp',
           'natural language processing',

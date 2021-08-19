@@ -63,7 +63,7 @@ def download_and_extract_asset(asset: GitReleaseAsset,
     """
     chunk_size = 1024*1024
     with typer.progressbar(length=asset.size,
-                           label='Downloading resources ...') as progress:
+                           label=f'Downloading {asset.name} ...') as progress:
         with requests.get(url=asset.browser_download_url,
                           stream=True) as r:
             with BytesIO() as io_file:
