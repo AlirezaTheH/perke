@@ -27,5 +27,5 @@ Once you have Python installed, follow bellow steps:
 
   Alternatively, you can use another model with same tag names and structure,
   and put it in the
-  `resources <https://github.com/alirezah320/perke/tree/main/perke/resources>`_
+  `resources <https://github.com/alirezatheh/perke/tree/main/perke/resources>`_
   directory.

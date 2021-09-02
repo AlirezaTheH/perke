@@ -18,7 +18,7 @@ Commands
   Perke requires a trained POS tagger model. We use hazm's tagger model. This
   command aims to easily download latest hazm's resources (tagger and parser
   models). The downloaded resources will be put in the
-  `resources <https://github.com/alirezah320/perke/tree/main/perke/resources>`_
+  `resources <https://github.com/alirezatheh/perke/tree/main/perke/resources>`_
   directory so that Perke can use them.
 
   .. code:: bash
@@ -28,7 +28,7 @@ Commands
 - ``clear``
 
   Clears the
-  `resources <https://github.com/alirezah320/perke/tree/main/perke/resources>`_
+  `resources <https://github.com/alirezatheh/perke/tree/main/perke/resources>`_
   directory.
 
   .. code:: bash

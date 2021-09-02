@@ -223,7 +223,8 @@ class TopicRank(Extractor):
         Parameters
         ----------
         threshold: `float`
-            The minimum similarity for clustering, defaults to 0.74.
+            The minimum similarity for clustering, defaults to `0.74`,
+            i.e. more than 1/4 of normalized word overlap similarity.
 
         metric: `str`
             The hierarchical clustering metric, defaults to `'jaccard'`

@@ -127,7 +127,7 @@ class MultipartiteRank(TopicRank):
             for c in topic:
                 self.topic_ids[c] = topic_id
 
-    def build_topic_graph(self) -> None:
+    def build_candidate_graph(self) -> None:
         """
         Build the Multipartite graph.
         """
@@ -223,7 +223,8 @@ class MultipartiteRank(TopicRank):
         Parameters
         ----------
         threshold: `float`
-            The minimum similarity for clustering, defaults to 0.74.
+            The minimum similarity for clustering, defaults to `0.74`,
+            i.e. more than 1/4 of normalized word overlap similarity.
 
         metric: `str`
             The hierarchical clustering metric, defaults to `'jaccard'`
@@ -243,8 +244,8 @@ class MultipartiteRank(TopicRank):
         # Cluster the candidates
         self.cluster_topics(threshold=threshold, linkage_method=linkage_method)
 
-        # Build the topic graph
-        self.build_topic_graph()
+        # Build the candidate graph
+        self.build_candidate_graph()
 
         if alpha > 0.0:
             self.weight_adjustment(alpha)

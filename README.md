@@ -1,5 +1,5 @@
 # Perke
-[![Build Status](https://travis-ci.com/alirezah320/perke.svg?branch=main)](https://travis-ci.com/alirezah320/perke)
+[![Build Status](https://travis-ci.com/alirezatheh/perke.svg?branch=main)](https://travis-ci.com/alirezatheh/perke)
 [![Documentation Status](https://readthedocs.org/projects/perke/badge/?version=latest)](https://perke.readthedocs.io/en/latest/?badge=latest)
 [![PyPI Version](https://img.shields.io/pypi/v/perke)](https://pypi.python.org/pypi/perke)
 [![Python Versions](https://img.shields.io/pypi/pyversions/perke)](https://pypi.org/project/perke)
@@ -15,7 +15,7 @@ can be easily modified or extended to develop new models.
   ```
   Alternatively, you can install directly from GitHub:
   ```bash
-  pip install git+https://github.com/alirezah320/perke.git
+  pip install git+https://github.com/alirezatheh/perke.git
   ```
 - Perke also requires a trained POS tagger model. We use
   [hazm's](https://github.com/sobhe/hazm) tagger model. You can easily download
@@ -26,7 +26,7 @@ can be easily modified or extended to develop new models.
   ```
   Alternatively, you can use another model with same tag names and structure,
   and put it in the
-  [`resources`](https://github.com/alirezah320/perke/tree/main/perke/resources)
+  [`resources`](https://github.com/alirezatheh/perke/tree/main/perke/resources)
   directory.
 
 ## Simple Example
@@ -57,7 +57,7 @@ keyphrases = extractor.get_n_best(n=10)
 ```
 
 For other models, see the
-[`examples`](https://github.com/alirezah320/perke/tree/main/examples)
+[`examples`](https://github.com/alirezatheh/perke/tree/main/examples)
 directory.
 
 ## Documentation

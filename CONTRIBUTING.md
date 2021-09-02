@@ -29,7 +29,7 @@ changes to this document in a pull request.
 This project and everyone participating in it is governed by the
 [Perke Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected
 to uphold this code. Please report unacceptable behavior to
-[alirezah320@yahoo.com](mailto:alirezah320@yahoo.com).
+[alirezatheh@gmail.com](mailto:alirezatheh@gmail.com).
 
 ## Contribution Ways
 ### Issues
@@ -46,7 +46,7 @@ reproduce the behavior, and find related reports.
 
 ##### Before Submitting A Bug Report
 - Perform a cursory search in
-  [issues](https://github.com/AlirezaH320/perke/issues) to see if the problem
+  [issues](https://github.com/alirezatheh/perke/issues) to see if the problem
   has already been reported.
   - If it has, and the issue is still open, add a comment to the existing issue
     instead of opening a new one.
@@ -74,7 +74,7 @@ understand your suggestion and find related suggestions.
 
 ##### Before Submitting An Enhancement Suggestion
 - Perform a cursory search in
-  [issues](https://github.com/AlirezaH320/perke/issues) to see if the
+  [issues](https://github.com/alirezatheh/perke/issues) to see if the
   enhancement has already been suggested.  If it has, add a comment to the
   existing issue instead of opening a new one.
 
