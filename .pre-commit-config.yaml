@@ -1,18 +1,18 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.0.1
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: double-quote-string-fixer
   - repo: https://github.com/pycqa/isort
-    rev: 5.8.0
+    rev: 5.9.3
     hooks:
       - id: isort
         args: [--multi-line=VERTICAL]
   - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.0
+    rev: 3.9.2
     hooks:
       - id: flake8
         additional_dependencies:
