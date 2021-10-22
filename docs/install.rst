@@ -15,7 +15,7 @@ Once you have Python installed, follow bellow steps:
 
   .. code:: bash
 
-      pip install git+https://github.com/tweepy/tweepy.git
+      pip install git+https://github.com/alirezatheh/perke.git
 
 - Perke also requires a trained POS tagger model. We use
   `hazm's <https://github.com/sobhe/hazm>`_ tagger model. You can download this
