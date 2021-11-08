@@ -205,7 +205,7 @@ class TopicRank(Extractor):
                             elif p_j < p_i:
                                 gap -= len(candidate_j.normalized_words) - 1
 
-                            self.graph[i][j]['weight'] += 1.0 / gap
+                            self.graph[i][j]['weight'] += 1.0/gap
 
     def weight_candidates(
             self,
