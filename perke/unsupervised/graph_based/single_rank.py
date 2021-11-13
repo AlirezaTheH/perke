@@ -63,7 +63,7 @@ class SingleRank(TextRank):
 
         Parameters
         ----------
-        valid_pos_tags: `set`
+        valid_pos_tags: `set[str]`, optional
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """

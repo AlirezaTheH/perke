@@ -204,7 +204,7 @@ class TextRank(Extractor):
 
         Parameters
         ----------
-        weights: `dict`
+        weights: `dict[str, float]`
             Word weights
 
         normalize_weights: `bool`

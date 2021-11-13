@@ -84,7 +84,7 @@ class Candidate:
                        words: List[str],
                        offset: int,
                        pos_tags: List[str],
-                       normalized_words: List[str]
+                       normalized_words: List[str],
                        ) -> None:
         """
         Adds a new occurrence to the candidate.
