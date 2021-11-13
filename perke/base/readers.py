@@ -30,7 +30,7 @@ class Reader:
     """
 
     def __init__(self,
-                 word_normalization_method: Literal[WordNormalizationMethod.enums]
+                 word_normalization_method: Literal[WordNormalizationMethod.enums],
                  ) -> None:
         """
         Initializes the reader.
@@ -64,7 +64,7 @@ class RawTextReader(Reader):
 
     def __init__(self,
                  input: str,
-                 word_normalization_method: Literal[WordNormalizationMethod.enums]
+                 word_normalization_method: Literal[WordNormalizationMethod.enums],
                  ) -> None:
         """
         Initializes the reader.

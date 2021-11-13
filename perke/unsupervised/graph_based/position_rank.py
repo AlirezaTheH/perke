@@ -201,7 +201,8 @@ class PositionRank(SingleRank):
         self.weight_candidates_with_words_weights(
             weights,
             normalize_weights,
-            use_position_adjustment=False)
+            use_position_adjustment=False,
+        )
 
     def filter_candidates(self, maximum_length: int = 3, **kwargs) -> None:
         """

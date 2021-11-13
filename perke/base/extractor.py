@@ -243,7 +243,8 @@ class Extractor:
         """
         self.select_candidates_with_longest_sequences(
             key=lambda sentence: sentence.pos_tags,
-            valid_values=valid_pos_tags)
+            valid_values=valid_pos_tags,
+        )
 
     def select_candidates_with_longest_keyword_sequences(self,
                                                          keywords: Set[str],
@@ -258,7 +259,8 @@ class Extractor:
         """
         self.select_candidates_with_longest_sequences(
             key=lambda sentence: sentence.normalized_words,
-            valid_values=keywords)
+            valid_values=keywords,
+        )
 
     def select_candidates_with_longest_sequences(self,
                                                  key: Callable[[Sentence], List[str]],
@@ -301,7 +303,8 @@ class Extractor:
                         words=sentence.words[first: last + 1],
                         offset=offset_shift + first,
                         pos_tags=sentence.pos_tags[first: last + 1],
-                        normalized_words=sentence.normalized_words[first: last + 1])
+                        normalized_words=sentence.normalized_words[first: last + 1],
+                    )
 
                 # Flush sequence offsets
                 sequence_offsets = []
@@ -366,7 +369,8 @@ class Extractor:
                         words=sentence.words[first:last + 1],
                         offset=offset_shift + first,
                         pos_tags=sentence.pos_tags[first:last + 1],
-                        normalized_words=sentence.normalized_words[first:last + 1])
+                        normalized_words=sentence.normalized_words[first:last + 1],
+                    )
 
             # Compute offset shift
             offset_shift += sentence.length

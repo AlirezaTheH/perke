@@ -268,10 +268,10 @@ pre-commit run --all-files
 
   # For longer function definitions
   def longer_function_name(
-          var_one: Any,
-          var_two: Any,
-          var_three: Any,
-          var_four: ANy,
+      var_one: Any,
+      var_two: Any,
+      var_three: Any,
+      var_four: ANy,
   ) -> Any:
       pass
 

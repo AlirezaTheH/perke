@@ -62,7 +62,8 @@ class TopicRank(Extractor):
         extractor.weight_candidates(
             threshold=0.74,
             metric=HierarchicalClusteringMetric.jaccard,
-            linkage_method=HierarchicalClusteringLinkageMethod.average)
+            linkage_method=HierarchicalClusteringLinkageMethod.average,
+        )
 
         # 5. Get the 10 highest weighted candidates as keyphrases
         keyphrases = extractor.get_n_best(n=10)
@@ -133,12 +134,12 @@ class TopicRank(Extractor):
         return candidates, candidate_matrix
 
     def cluster_topics(
-            self,
-            threshold: float = 0.74,
-            metric: Literal[HierarchicalClusteringMetric.enums]
-            = HierarchicalClusteringMetric.jaccard,
-            linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
-            = HierarchicalClusteringLinkageMethod.average,
+        self,
+        threshold: float = 0.74,
+        metric: Literal[HierarchicalClusteringMetric.enums]
+        = HierarchicalClusteringMetric.jaccard,
+        linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
+        = HierarchicalClusteringLinkageMethod.average,
     ) -> None:
         """
         Clusters candidates into topics.
@@ -208,14 +209,14 @@ class TopicRank(Extractor):
                             self.graph[i][j]['weight'] += 1.0/gap
 
     def weight_candidates(
-            self,
-            threshold: float = 0.74,
-            metric: Literal[HierarchicalClusteringMetric.enums]
-            = HierarchicalClusteringMetric.jaccard,
-            linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
-            = HierarchicalClusteringLinkageMethod.average,
-            topic_heuristic: Literal[TopicHeuristic.enums]
-            = TopicHeuristic.first_occurring,
+        self,
+        threshold: float = 0.74,
+        metric: Literal[HierarchicalClusteringMetric.enums]
+        = HierarchicalClusteringMetric.jaccard,
+        linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
+        = HierarchicalClusteringLinkageMethod.average,
+        topic_heuristic: Literal[TopicHeuristic.enums]
+        = TopicHeuristic.first_occurring,
     ) -> None:
         """
         Candidate ranking using random walk.

@@ -83,7 +83,8 @@ class TextRank(Extractor):
         """
         # Select sequences of words with valid pos tags
         self.select_candidates_with_longest_pos_sequences(
-            valid_pos_tags=self.valid_pos_tags)
+            valid_pos_tags=self.valid_pos_tags,
+        )
 
     def build_word_graph(self, window_size: int = 2) -> None:
         """
@@ -189,7 +190,8 @@ class TextRank(Extractor):
 
             # Creating keyphrases from the T top words
             self.select_candidates_with_longest_keyword_sequences(
-                keywords=set(sorted_weights[:int(to_keep)]))
+                keywords=set(sorted_weights[:int(to_keep)]),
+            )
 
         self.weight_candidates_with_words_weights(weights, normalize_weights)
 

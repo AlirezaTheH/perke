@@ -45,7 +45,8 @@ class MultipartiteRank(TopicRank):
         # 2. Load the text.
         extractor.load_text(
             input='text or path/to/input_file',
-            word_normalization_method=WordNormalizationMethod.stemming)
+            word_normalization_method=WordNormalizationMethod.stemming,
+        )
 
         # 3. Select the longest sequences of nouns and adjectives, that do
         #    not contain punctuation marks or stopwords as candidates.
@@ -59,7 +60,8 @@ class MultipartiteRank(TopicRank):
             threshold=0.74,
             metric=HierarchicalClusteringMetric.jaccard,
             linkage_method=HierarchicalClusteringLinkageMethod.average,
-            alpha=1.1)
+            alpha=1.1,
+        )
 
         # 5. Get the 10 highest weighted candidates as keyphrases
         keyphrases = extractor.get_n_best(n=10)
@@ -88,12 +90,12 @@ class MultipartiteRank(TopicRank):
         self.graph = nx.DiGraph()
 
     def cluster_topics(
-            self,
-            threshold: float = 0.74,
-            metric: Literal[HierarchicalClusteringMetric.enums]
-            = HierarchicalClusteringMetric.jaccard,
-            linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
-            = HierarchicalClusteringLinkageMethod.average,
+        self,
+        threshold: float = 0.74,
+        metric: Literal[HierarchicalClusteringMetric.enums]
+        = HierarchicalClusteringMetric.jaccard,
+        linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
+        = HierarchicalClusteringLinkageMethod.average,
     ) -> None:
         """
         Clustering candidates into topics.
