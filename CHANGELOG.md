@@ -8,7 +8,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 ### Added
-- Added support for Python `3.10` and `3.11`
+- Added support for Python `3.10`
 - Added [Rich](https://github.com/Textualize/rich) integration to beatify CLI
   outputs
 - Added [BumpVer](https://github.com/mbarkhau/bumpver) config

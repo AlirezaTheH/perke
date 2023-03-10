@@ -1,7 +1,7 @@
 import logging
 from collections import defaultdict
 from pathlib import Path
-from typing import Callable, DefaultDict, List, Optional, Set, Tuple
+from typing import Callable, DefaultDict, List, Optional, Set, Tuple, Union
 
 import hazm
 import nltk
@@ -59,7 +59,7 @@ class Extractor:
 
     def load_text(
         self,
-        input: str | Path,
+        input: Union[str, Path],
         word_normalization_method: WordNormalizationMethod = 'stemming',
     ) -> None:
         """
