@@ -24,36 +24,11 @@ class SingleRank(TextRank):
 
     Examples
     --------
-    .. code:: python
-
-        from perke.unsupervised.graph_based import SingleRank
-
-        # Define the set of valid part of speech tags to occur in the model.
-        valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
-
-        # 1. Create a SingleRank extractor.
-        extractor = SingleRank(valid_pos_tags=valid_pos_tags)
-
-        # 2. Load the text.
-        extractor.load_text(input='text or path/to/input_file',
-                            word_normalization_method=None)
-
-        # 3. Select the longest sequences of nouns and adjectives as
-        #    candidates.
-        extractor.select_candidates()
-
-        # 4. Weight the candidates using the sum of their words weights that
-        #    are computed using random walk. In the graph, nodes are certain
-        #    parts of speech (nouns and adjectives) that are connected if
-        #    they co-occur in a window of 10 words.
-        extractor.weight_candidates(window=10)
-
-        # 5. Get the 10 highest weighted candidates as keyphrases
-        keyphrases = extractor.get_n_best(n=10)
+    .. literalinclude:: ../../../examples/unsupervised/graph_based/single_rank.py
 
     Attributes
     ----------
-    graph_edges_are_weighted: `bool`
+    graph_edges_are_weighted:
         Whether graph edges are weighted
     """
 
@@ -63,14 +38,14 @@ class SingleRank(TextRank):
 
         Parameters
         ----------
-        valid_pos_tags: `set[str]`, optional
+        valid_pos_tags:
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
         super().__init__(valid_pos_tags)
-        self.graph_edges_are_weighted = True
+        self.graph_edges_are_weighted: bool = True
 
-    def build_word_graph(self, window_size: int = 10) -> None:
+    def _build_word_graph(self, window_size: int = 10) -> None:
         """
         Builds a graph representation of the text just like TextRank
         except that edges in SingleRank graph are weighted and the
@@ -83,13 +58,14 @@ class SingleRank(TextRank):
             The size of window for connecting two words in the graph,
             defaults to `10`.
         """
-        super().build_word_graph(window_size)
+        super()._build_word_graph(window_size)
 
-    def weight_candidates(self,
-                          window_size: int = 10,
-                          normalize_weights: bool = False,
-                          **kwargs,
-                          ) -> None:
+    def weight_candidates(
+        self,
+        window_size: int = 10,
+        normalize_weights: bool = False,
+        **kwargs,
+    ) -> None:
         """
         Weights candidates using the weighted variant of the TextRank
         formulae. Candidates are weighted by the sum of the weights of
@@ -106,12 +82,11 @@ class SingleRank(TextRank):
             to `False`.
         """
         # Build the word graph
-        self.build_word_graph(window_size)
+        self._build_word_graph(window_size)
 
         # Compute the word weights using random walk
-        weights = nx.pagerank_scipy(self.graph,
-                                    alpha=0.85,
-                                    tol=0.0001,
-                                    weight='weight')
+        weights = nx.pagerank(
+            self.graph, alpha=0.85, tol=0.0001, weight='weight'
+        )
 
-        self.weight_candidates_with_words_weights(weights, normalize_weights)
+        self._weight_candidates_with_words_weights(weights, normalize_weights)

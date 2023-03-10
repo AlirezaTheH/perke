@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Optional, Set
+from typing import DefaultDict, Optional, Set
 
 import networkx as nx
 
@@ -26,45 +26,11 @@ class PositionRank(SingleRank):
 
     Examples
     --------
-    .. code:: python
-
-        from perke.unsupervised.graph_based import PositionRank
-
-        # Define the set of valid part of speech tags to occur in the model.
-        valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
-
-        # Define the grammar for selecting the keyphrase candidates
-        grammar = r\"""
-            NP:
-                <P>{<N>}<V>
-            NP:
-                {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
-                <N>}{<.*e?>
-        \"""
-
-        # 1. Create a PositionRank extractor.
-        extractor = PositionRank(valid_pos_tags=valid_pos_tags)
-
-        # 2. Load the text.
-        extractor.load_text(input='text or path/to/input_file',
-                            word_normalization_method=None)
-
-        # 3. Select the noun phrases up to 3 words as keyphrase candidates.
-        extractor.select_candidates(grammar=grammar, maximum_word_number=3)
-
-        # 4. Weight the candidates using the sum of their word's weights
-        #    that are computed using random walk biased with the position of
-        #    the words in the text. In the graph, nodes are words (nouns
-        #    and adjectives only) that are connected if they co-occur in a
-        #    window of 10 words.
-        extractor.weight_candidates(window_size=10)
-
-        # 5. Get the 10 highest weighted candidates as keyphrases
-        keyphrases = extractor.get_n_best(n=10)
+    .. literalinclude:: ../../../examples/unsupervised/graph_based/position_rank.py
 
     Attributes
     ----------
-    positions: `defaultdict[str, float]`
+    positions:
         Dict of normalized word to the sums of word's inverse positions
     """
 
@@ -74,18 +40,19 @@ class PositionRank(SingleRank):
 
         Parameters
         ----------
-        valid_pos_tags: `set[str]`, optional
+        valid_pos_tags:
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
         super().__init__(valid_pos_tags)
-        self.positions = defaultdict(float)
+        self.positions: DefaultDict[str, float] = defaultdict(float)
 
-    def select_candidates(self,
-                          grammar: Optional[str] = None,
-                          maximum_length: int = 3,
-                          **kwargs,
-                          ) -> None:
+    def select_candidates(
+        self,
+        grammar: Optional[str] = None,
+        maximum_length: int = 3,
+        **kwargs,
+    ) -> None:
         """
         Candidate selection heuristic using a syntactic part of speech
         pattern for noun phrase extraction. Keyphrase candidates are
@@ -94,7 +61,7 @@ class PositionRank(SingleRank):
 
         Parameters
         ----------
-        grammar: `str`, optional
+        grammar:
             Grammar defining part of speech patterns of noun phrases,
             defaults to::
                 r\"""
@@ -118,11 +85,11 @@ class PositionRank(SingleRank):
             """
 
         # Select sequence of noun phrases with given pattern
-        self.select_candidates_with_grammar(grammar=grammar)
+        self._select_candidates_with_grammar(grammar=grammar)
 
-        self.filter_candidates(maximum_length)
+        self._filter_candidates(maximum_length)
 
-    def build_word_graph(self, window_size: int = 10) -> None:
+    def _build_word_graph(self, window_size: int = 10) -> None:
         """
         Build the graph representation of the text. In the graph, nodes
         are words that passes a parts of speech filter. Two nodes are
@@ -133,7 +100,7 @@ class PositionRank(SingleRank):
 
         Parameters
         ----------
-        window_size: `int`
+        window_size:
             The size of window for connecting two words in the graph,
             defaults to `10`.
         """
@@ -153,9 +120,10 @@ class PositionRank(SingleRank):
 
         # Add edges to the graph
         for i, (first_node, first_node_position) in enumerate(flatten_text):
-            for second_node, second_node_position in flatten_text[i + 1:]:
-                if ((second_node_position - first_node_position) < window_size
-                        and first_node != second_node):
+            for second_node, second_node_position in flatten_text[i + 1 :]:
+                if (
+                    second_node_position - first_node_position
+                ) < window_size and first_node != second_node:
                     if not self.graph.has_edge(first_node, second_node):
                         self.graph.add_edge(first_node, second_node, weight=0)
 
@@ -163,28 +131,29 @@ class PositionRank(SingleRank):
 
         # Compute the sums of the word's inverse positions
         for word, position in flatten_text:
-            self.positions[word] += 1/(position + 1)
+            self.positions[word] += 1 / (position + 1)
 
-    def weight_candidates(self,
-                          window_size: int = 10,
-                          normalize_weights: bool = False,
-                          **kwargs,
-                          ) -> None:
+    def weight_candidates(
+        self,
+        window_size: int = 10,
+        normalize_weights: bool = False,
+        **kwargs,
+    ) -> None:
         """
         Calculates candidates weights using a biased PageRank.
 
         Parameters
         ----------
-        window_size: `int`
+        window_size:
             The size of window for connecting two words in the graph,
             defaults to `10`.
 
-        normalize_weights: `bool`
+        normalize_weights:
             Normalize keyphrase weight by their length, defaults to
             `False`.
         """
         # Build the word graph
-        self.build_word_graph(window_size)
+        self._build_word_graph(window_size)
 
         # Normalize cumulated inverse positions
         position_sum = sum(self.positions.values())
@@ -192,25 +161,27 @@ class PositionRank(SingleRank):
             self.positions[word] /= position_sum
 
         # Compute the word weights using biased random walk
-        weights = nx.pagerank(G=self.graph,
-                              alpha=0.85,
-                              tol=0.0001,
-                              personalization=self.positions,
-                              weight='weight')
+        weights = nx.pagerank(
+            self.graph,
+            alpha=0.85,
+            tol=0.0001,
+            personalization=self.positions,
+            weight='weight',
+        )
 
-        self.weight_candidates_with_words_weights(
+        self._weight_candidates_with_words_weights(
             weights,
             normalize_weights,
             use_position_adjustment=False,
         )
 
-    def filter_candidates(self, maximum_length: int = 3, **kwargs) -> None:
+    def _filter_candidates(self, maximum_length: int = 3, **kwargs) -> None:
         """
         Filters the candidates with given conditions.
 
         Parameters
         ----------
-        maximum_length: `int`
+        maximum_length:
             Maximum length in words of the candidate, defaults to 3.
         """
         for c in list(self.candidates):

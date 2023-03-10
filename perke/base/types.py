@@ -1,40 +1,10 @@
-from perke.utils.enum import Enum
+from typing import Literal
 
-
-class WordNormalizationMethod(Enum):
-    """
-    Represents a word normalization method.
-    """
-
-    stemming = 'stemming'
-    lemmatization = 'lemmatization'
-
-
-class TopicHeuristic(Enum):
-    """
-    Represents a heuristic for selecting the best candidate for each
-    topic.
-    """
-
-    first_occurring = 'first_occurring'
-    frequent = 'frequent'
-
-
-class HierarchicalClusteringLinkageMethod(Enum):
-    """
-    Represents a hierarchical clustering linkage method.
-    """
-
-    single = 'single'
-    complete = 'complete'
-    average = 'average'
-
-
-class HierarchicalClusteringMetric(Enum):
-    """
-    Represents a hierarchical clustering metric.
-    """
-
-    euclidean = 'euclidean'
-    seuclidean = 'seuclidean'
-    jaccard = 'jaccard'
+#:
+WordNormalizationMethod = Literal['stemming', 'lemmatization', None]
+#:
+TopicHeuristic = Literal['first_occurring', 'frequent']
+#:
+HierarchicalClusteringLinkageMethod = Literal['single', 'complete', 'average']
+#:
+HierarchicalClusteringMetric = Literal['euclidean', 'seuclidean', 'jaccard']

@@ -9,13 +9,13 @@ class Sentence:
 
     Attributes
     ----------
-    words: `List[str]`
+    words:
         List of words
 
-    pos_tags: `List[str]`
+    pos_tags:
         List of part of speech tags assigned to words
 
-    normalized_words: `List[str]`
+    normalized_words:
         List of normalized of words
     """
 
@@ -30,8 +30,7 @@ class Sentence:
 
         Returns
         -------
-        length: `int`
-            Number of words
+        Number of words
         """
         return len(self.words)
 
@@ -43,29 +42,29 @@ class Candidate:
 
     Attributes
     ----------
-    all_words: `list[list[str]]`
+    all_words:
         Nested list of words, each words list in the list corresponds to
         one of the candidate occurrence.
 
-    offsets: `list[list[int]]`
+    offsets:
         List of offsets of each occurrence.
 
-    all_pos_tags: `list[list[str]]`
+    all_pos_tags:
         Nested list of pos tags, each pos tags list in the list
         corresponds to one of the candidate occurrence.
 
-    normalized_words: `list[str]`
+    normalized_words:
         List of normalized of words, all occurrences have the same
         list of normalized words.
 
-    weight: `float`
+    weight:
         Candidate weight in weighting algorithms.
     """
 
-    all_words: list = field(default_factory=list)
-    offsets: list = field(default_factory=list)
-    all_pos_tags: list = field(default_factory=list)
-    normalized_words: list = field(default_factory=list)
+    all_words: List[List[str]] = field(default_factory=list)
+    offsets: List[int] = field(default_factory=list)
+    all_pos_tags: List[List[str]] = field(default_factory=list)
+    normalized_words: List[str] = field(default_factory=list)
     weight: float = 0
 
     @property
@@ -75,33 +74,33 @@ class Candidate:
 
         Returns
         -------
-        length: `int`
-            Number of normalized words
+        Number of normalized words
         """
         return len(self.normalized_words)
 
-    def add_occurrence(self,
-                       words: List[str],
-                       offset: int,
-                       pos_tags: List[str],
-                       normalized_words: List[str],
-                       ) -> None:
+    def add_occurrence(
+        self,
+        words: List[str],
+        offset: int,
+        pos_tags: List[str],
+        normalized_words: List[str],
+    ) -> None:
         """
         Adds a new occurrence to the candidate.
 
         Parameters
         ----------
-        words: `list[str]`
+        words:
             List of words of the occurrence
 
-        offset: `int`
+        offset:
             The offset of the occurrence
 
-        pos_tags: `list[str]`
+        pos_tags:
             List of part of speech tags assigned to words of the
             occurrence
 
-        normalized_words: `list[str]`
+        normalized_words:
             List of normalized of words of the occurrence
         """
         self.all_words.append(words)

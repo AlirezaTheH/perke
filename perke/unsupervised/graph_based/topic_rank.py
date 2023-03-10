@@ -1,5 +1,5 @@
 from itertools import combinations
-from typing import List, Literal, Optional, Set, Tuple
+from typing import List, Optional, Set, Tuple
 
 import networkx as nx
 import numpy as np
@@ -7,9 +7,11 @@ from scipy.cluster.hierarchy import fcluster, linkage
 from scipy.spatial.distance import pdist
 
 from perke.base.extractor import Extractor
-from perke.base.types import (HierarchicalClusteringLinkageMethod,
-                              HierarchicalClusteringMetric,
-                              TopicHeuristic)
+from perke.base.types import (
+    HierarchicalClusteringLinkageMethod,
+    HierarchicalClusteringMetric,
+    TopicHeuristic,
+)
 
 
 class TopicRank(Extractor):
@@ -33,47 +35,14 @@ class TopicRank(Extractor):
 
     Examples
     --------
-    .. code:: python
-
-        from perke.unsupervised.graph_based import TopicRank
-        from perke.base.types import (WordNormalizationMethod,
-                                      HierarchicalClusteringMetric,
-                                      HierarchicalClusteringLinkageMethod)
-
-        # Define the set of valid part of speech tags to occur in the model.
-        valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
-
-        # 1. Create a TopicRank extractor.
-        extractor = TopicRank(valid_pos_tags=valid_pos_tags)
-
-        # 2. Load the text.
-        extractor.load_text(
-            input='text or path/to/input_file',
-            word_normalization_method=WordNormalizationMethod.stemming)
-
-        # 3. Select the longest sequences of nouns and adjectives, that do
-        #    not contain punctuation marks or stopwords as candidates.
-        extractor.select_candidates()
-
-        # 4. Build topics by grouping candidates with HAC (average linkage,
-        #    jaccard distance, threshold of 1/4 of shared normalized words).
-        #    Weight the topics using random walk, and select the first
-        #    occurring candidate from each topic.
-        extractor.weight_candidates(
-            threshold=0.74,
-            metric=HierarchicalClusteringMetric.jaccard,
-            linkage_method=HierarchicalClusteringLinkageMethod.average,
-        )
-
-        # 5. Get the 10 highest weighted candidates as keyphrases
-        keyphrases = extractor.get_n_best(n=10)
+    .. literalinclude:: ../../../examples/unsupervised/graph_based/topic_rank.py
 
     Attributes
     ----------
-    graph: `nx.Graph`
+    graph:
         The topic graph
 
-    topics: `list[list[str]]`
+    topics:
         List of topics
     """
 
@@ -88,31 +57,32 @@ class TopicRank(Extractor):
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
         super().__init__(valid_pos_tags)
-        self.graph = nx.Graph()
-        self.topics = []
+        self.graph: nx.Graph = nx.Graph()
+        self.topics: List[List[str]] = []
 
     def select_candidates(self) -> None:
         """
-        Selects longest sequences of nouns and adjectives as keyphrase
-        candidates.
+        Selects the longest sequences of nouns and adjectives as
+        keyphrase candidates.
         """
         # Select sequence of adjectives and nouns
-        self.select_candidates_with_longest_pos_sequences(
-            valid_pos_tags=self.valid_pos_tags)
+        self._select_candidates_with_longest_pos_sequences(
+            valid_pos_tags=self.valid_pos_tags
+        )
 
         # Filter candidates containing stopwords or punctuation marks
-        self.filter_candidates(stopwords=self.stopwords)
+        self._filter_candidates(stopwords=self.stopwords)
 
-    def vectorize_candidates(self) -> Tuple[List[str], np.ndarray]:
+    def _vectorize_candidates(self) -> Tuple[List[str], np.ndarray]:
         """
         Vectorize the keyphrase candidates.
 
         Returns
         -------
-        candidates: `list[str]`
+        candidates:
             The list of candidates (canonical forms).
 
-        candidate_matrix: `np.ndarray`
+        candidate_matrix:
             Vectorized representation of the candidates.
         """
         # Build the vocabulary, i.e. setting the vector dimensions
@@ -133,29 +103,27 @@ class TopicRank(Extractor):
 
         return candidates, candidate_matrix
 
-    def cluster_topics(
+    def _cluster_topics(
         self,
         threshold: float = 0.74,
-        metric: Literal[HierarchicalClusteringMetric.enums]
-        = HierarchicalClusteringMetric.jaccard,
-        linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
-        = HierarchicalClusteringLinkageMethod.average,
+        metric: HierarchicalClusteringMetric = 'jaccard',
+        linkage_method: HierarchicalClusteringLinkageMethod = 'average',
     ) -> None:
         """
         Clusters candidates into topics.
 
         Parameters
         ----------
-        threshold: `float`
+        threshold:
             The minimum similarity for clustering, defaults to `0.74`,
             i.e. more than 1/4 of normalized word overlap similarity.
 
-        metric: `str`
+        metric:
             The hierarchical clustering metric, defaults to `'jaccard'`
             See `perke.base.types.HierarchicalClusteringMetric` for
             available methods.
 
-        linkage_method: `str`
+        linkage_method:
             The hierarchical clustering linkage method, defaults to
             `'average'`. See
             `perke.base.types.HierarchicalClusteringLinkageMethod` for
@@ -167,7 +135,7 @@ class TopicRank(Extractor):
             return
 
         # Vectorize the candidates
-        candidates, candidate_matrix = self.vectorize_candidates()
+        candidates, candidate_matrix = self._vectorize_candidates()
 
         # Compute the distance matrix
         distance_matrix = pdist(candidate_matrix, metric)
@@ -181,10 +149,15 @@ class TopicRank(Extractor):
 
         # For each topic identifier
         for cluster_id in range(1, max(flat_clusters) + 1):
-            self.topics.append([candidates[j] for j in range(len(flat_clusters))
-                                if flat_clusters[j] == cluster_id])
+            self.topics.append(
+                [
+                    candidates[j]
+                    for j in range(len(flat_clusters))
+                    if flat_clusters[j] == cluster_id
+                ]
+            )
 
-    def build_topic_graph(self) -> None:
+    def _build_topic_graph(self) -> None:
         """
         Build topic graph.
         """
@@ -206,69 +179,66 @@ class TopicRank(Extractor):
                             elif p_j < p_i:
                                 gap -= len(candidate_j.normalized_words) - 1
 
-                            self.graph[i][j]['weight'] += 1.0/gap
+                            self.graph[i][j]['weight'] += 1.0 / gap
 
     def weight_candidates(
         self,
         threshold: float = 0.74,
-        metric: Literal[HierarchicalClusteringMetric.enums]
-        = HierarchicalClusteringMetric.jaccard,
-        linkage_method: Literal[HierarchicalClusteringLinkageMethod.enums]
-        = HierarchicalClusteringLinkageMethod.average,
-        topic_heuristic: Literal[TopicHeuristic.enums]
-        = TopicHeuristic.first_occurring,
+        metric: HierarchicalClusteringMetric = 'jaccard',
+        linkage_method: HierarchicalClusteringLinkageMethod = 'average',
+        topic_heuristic: TopicHeuristic = 'first_occurring',
     ) -> None:
         """
         Candidate ranking using random walk.
 
         Parameters
         ----------
-        threshold: `float`
+        threshold:
             The minimum similarity for clustering, defaults to `0.74`,
             i.e. more than 1/4 of normalized word overlap similarity.
 
-        metric: `str`
+        metric:
             The hierarchical clustering metric, defaults to `'jaccard'`
             See `perke.base.types.HierarchicalClusteringMetric` for
             available methods.
 
-        linkage_method: `str`
+        linkage_method:
             The hierarchical clustering linkage method, defaults to
             `'average'`. See
             `perke.base.types.HierarchicalClusteringLinkageMethod` for
             available methods.
 
-        topic_heuristic: `str`
+        topic_heuristic:
             The heuristic for selecting the best candidate for each
             topic, defaults to first occurring candidate. See
             `perke.base.types.TopicHeuristic` for available heuristics.
         """
         # Cluster the candidates
-        self.cluster_topics(threshold, metric, linkage_method)
+        self._cluster_topics(threshold, metric, linkage_method)
 
         # Build the topic graph
-        self.build_topic_graph()
+        self._build_topic_graph()
 
         # Compute the word weights using random walk
-        weights = nx.pagerank_scipy(self.graph, alpha=0.85, weight='weight')
+        weights = nx.pagerank(self.graph, alpha=0.85, weight='weight')
 
         # Loop through the topics
         for i, topic in enumerate(self.topics):
-
             # Get the offsets of the topic candidates
             offsets = [self.candidates[c].offsets[0] for c in topic]
 
             # Get first candidate from topic
-            if topic_heuristic == TopicHeuristic.frequent:
-
+            if topic_heuristic == 'frequent':
                 # Get frequencies for each candidate within the topic
-                frequencies = [len(self.candidates[c].all_words)
-                               for c in topic]
+                frequencies = [
+                    len(self.candidates[c].all_words) for c in topic
+                ]
 
                 # Get the indices of the most frequent candidates
                 max_frequency = max(frequencies)
-                indices = [j for j, f in enumerate(frequencies)
-                           if f == max_frequency]
+                indices = [
+                    j for j, f in enumerate(frequencies) if f == max_frequency
+                ]
 
                 # Offsets of the indexes
                 indices_offsets = [offsets[j] for j in indices]

@@ -29,36 +29,16 @@ class TextRank(Extractor):
       <http://www.aclweb.org/anthology/W04-3252.pdf>`_
     | In Proceedings of EMNLP, 2004
 
-    Example
-    -------
-    .. code:: python
-
-        from perke.unsupervised.graph_based import TextRank
-
-        # Define the set of valid part of speech tags to occur in the model.
-        valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
-
-        # 1. Create a TextRank extractor.
-        extractor = TextRank(valid_pos_tags=valid_pos_tags)
-
-        # 2. Load the text.
-        extractor.load_text(input='text or path/to/input_file',
-                            word_normalization_method=None)
-
-        # 3. Build the graph representation of the text and weight the
-        #    words. Keyphrase candidates are composed from the 33 percent
-        #    highest weighted words.
-        extractor.weight_candidates(window_size=2, top_t_percent=0.33)
-
-        # 4. Get the 10 highest weighted candidates as keyphrases.
-        keyphrases = extractor.get_n_best(n=10)
+    Examples
+    --------
+    .. literalinclude:: ../../../examples/unsupervised/graph_based/text_rank.py
 
     Attributes
     ----------
-    graph: `nx.Graph`
+    graph:
         The word graph
 
-    graph_edges_are_weighted: `bool`
+    graph_edges_are_weighted:
         Whether graph edges are weighted
     """
 
@@ -68,30 +48,30 @@ class TextRank(Extractor):
 
         Parameters
         ----------
-        valid_pos_tags: `set[str]`, optional
+        valid_pos_tags:
             Set of valid part of speech tags, defaults to nouns and
             adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
         """
         super().__init__(valid_pos_tags)
-        self.graph = nx.Graph()
-        self.graph_edges_are_weighted = False
+        self.graph: nx.Graph = nx.Graph()
+        self.graph_edges_are_weighted: bool = False
 
     def select_candidates(self) -> None:
         """
-        Selects candidates using longest sequences of certain parts of
-        speech.
+        Selects candidates using the longest sequences of certain parts
+        of speech.
         """
         # Select sequences of words with valid pos tags
-        self.select_candidates_with_longest_pos_sequences(
+        self._select_candidates_with_longest_pos_sequences(
             valid_pos_tags=self.valid_pos_tags,
         )
 
-    def build_word_graph(self, window_size: int = 2) -> None:
+    def _build_word_graph(self, window_size: int = 2) -> None:
         """
         Builds a graph representation of the text in which nodes are
         words and edges represent co-occurrence relation. Syntactic
-        filters can be applied to select only words with certain
-        part of speech tags (noun and adjectives by default).
+        filters can be applied to select only words with certain part
+        of speech tags (noun and adjectives by default).
         Co-occurrence relations can be controlled using the distance
         between word occurrences (window) in the text.
 
@@ -104,7 +84,7 @@ class TextRank(Extractor):
 
         Parameters
         ----------
-        window_size: `int`
+        window_size:
             The size of window for connecting two words in the graph,
             defaults to `2`.
         """
@@ -121,7 +101,6 @@ class TextRank(Extractor):
 
         # Add edges to the graph
         for i, (first_node, first_node_is_valid) in enumerate(flatten_text):
-
             # Speed up things
             if not first_node_is_valid:
                 continue
@@ -130,13 +109,12 @@ class TextRank(Extractor):
                 second_node, second_node_is_valid = flatten_text[j]
 
                 if second_node_is_valid and first_node != second_node:
-
                     # SingleRank
                     if self.graph_edges_are_weighted:
                         if not self.graph.has_edge(first_node, second_node):
-                            self.graph.add_edge(first_node,
-                                                second_node,
-                                                weight=0.0)
+                            self.graph.add_edge(
+                                first_node, second_node, weight=0.0
+                            )
 
                         self.graph[first_node][second_node]['weight'] += 1.0
 
@@ -144,40 +122,38 @@ class TextRank(Extractor):
                     else:
                         self.graph.add_edge(first_node, second_node)
 
-    def weight_candidates(self,
-                          window_size: int = 2,
-                          top_t_percent: Optional[float] = None,
-                          normalize_weights: bool = False,
-                          ) -> None:
+    def weight_candidates(
+        self,
+        window_size: int = 2,
+        top_t_percent: Optional[float] = None,
+        normalize_weights: bool = False,
+    ) -> None:
         """
         Tailored candidate weighting method for TextRank. Keyphrase
-        candidates are either composed from the top T highest weighted
+        candidates are either composed of the top T-highest weighted
         words as in the original paper or extracted using the
         `select_candidates` method. Candidates are weighting using the
         sum of their (normalized?) words.
 
         Parameters
         ----------
-        window_size: `int`
+        window_size:
             The size of window for connecting two words in the graph,
             defaults to `2`.
 
-        top_t_percent: `float`
+        top_t_percent:
             Percentage of top vertices to keep for phrase generation.
 
-        normalize_weights: `bool`
+        normalize_weights:
             Whether normalize keyphrase weight by their length, defaults
             to `False`.
         """
         # Build the word graph
-        self.build_word_graph(window_size)
+        self._build_word_graph(window_size)
 
         # Compute the word weights using the unweighted PageRank
         # formulae
-        weights = nx.pagerank_scipy(self.graph,
-                                    alpha=0.85,
-                                    tol=0.0001,
-                                    weight=None)
+        weights = nx.pagerank(self.graph, alpha=0.85, tol=0.0001, weight=None)
 
         # Generate the phrases from the T-percent top weighted words
         if top_t_percent is not None:
@@ -189,36 +165,37 @@ class TextRank(Extractor):
             sorted_weights = sorted(weights, key=weights.get, reverse=True)
 
             # Creating keyphrases from the T top words
-            self.select_candidates_with_longest_keyword_sequences(
-                keywords=set(sorted_weights[:int(to_keep)]),
+            self._select_candidates_with_longest_keyword_sequences(
+                keywords=set(sorted_weights[: int(to_keep)]),
             )
 
-        self.weight_candidates_with_words_weights(weights, normalize_weights)
+        self._weight_candidates_with_words_weights(weights, normalize_weights)
 
-    def weight_candidates_with_words_weights(
-            self,
-            weights: Dict[str, float],
-            normalize_weights: bool,
-            use_position_adjustment: bool = True,
+    def _weight_candidates_with_words_weights(
+        self,
+        weights: Dict[str, float],
+        normalize_weights: bool,
+        use_position_adjustment: bool = True,
     ) -> None:
         """
         Weights candidates using the sum of their words weights.
 
         Parameters
         ----------
-        weights: `dict[str, float]`
+        weights:
             Word weights
 
-        normalize_weights: `bool`
+        normalize_weights:
             Whether normalize keyphrase weight by their length.
 
-        use_position_adjustment: `bool`
-            Whether use candidate position to adjust weights,
+        use_position_adjustment:
+            Whether to use candidate position to adjust weights,
             defaults to `True`.
         """
         for candidate in self.candidates.values():
-            candidate.weight = sum([weights.get(word, 0.0)
-                                    for word in candidate.normalized_words])
+            candidate.weight = sum(
+                [weights.get(word, 0.0) for word in candidate.normalized_words]
+            )
 
             if normalize_weights:
                 candidate.weight /= len(candidate.normalized_words)

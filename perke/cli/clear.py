@@ -1,7 +1,7 @@
 import os
 from os.path import dirname, join
 
-import typer
+import rich_click.typer as typer
 
 from perke.cli.base import app
 
@@ -23,4 +23,4 @@ def clear() -> None:
         if file_name != 'README.md':
             file_path = join(resources_path, file_name)
             os.remove(file_path)
-            typer.echo(f'{file_name} removed.')
+            typer.secho(f'{file_name} removed.', fg='green')
