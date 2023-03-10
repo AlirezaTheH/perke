@@ -1,0 +1,41 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  main:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: |
+            **/*main.txt
+            **/*test.txt
+
+      - name: Install dependencies
+        run: >
+          python3 -m pip install
+          -r requirements/main.txt
+          -r requirements/test.txt
+
+      - name: Download resources
+        run: |
+          python3 -m pip install .
+          python3 -m perke download
+
+      - name: Run tests
+        run: pytest
