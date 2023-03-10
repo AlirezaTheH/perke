@@ -1,0 +1,44 @@
+name: publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      new-version:
+        description: New version to be published
+        required: true
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: '**/*main.txt'
+
+      - name: Install dependencies
+        run: python3 -m pip install -r requirements/main.txt
+
+      - name: Bump versions
+        uses: alirezatheh/auto-bump-versions@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          new-version: ${{ github.event.inputs.new-version }}
+          use-bumpver: true
+
+      - name: PyPI publish
+        uses: alirezatheh/pypi-auto-publish@v1
+        with:
+          test-pypi-api-token: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          pypi-api-token: ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: GitHub publish
+        uses: alirezatheh/github-auto-publish@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
