@@ -1,11 +1,11 @@
-from os.path import dirname, join
+from pathlib import Path
 
 import pytest
 
 
 @pytest.fixture(scope='session')
 def text() -> str:
-    input_filepath = join(dirname(dirname(__file__)), 'examples', 'input.txt')
-    with open(input_filepath) as f:
+    input_filepath = Path(__file__).parent.parent / 'examples' / 'input.txt'
+    with open(input_filepath, encoding='utf-8') as f:
         text = f.read()
     return text

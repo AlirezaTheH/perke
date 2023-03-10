@@ -88,7 +88,7 @@ class RawTextReader(Reader):
         # If input is a filepath
         if isinstance(input, Path):
             assert input.exists()
-            with open(input) as file:
+            with open(input, encoding='utf-8') as file:
                 self.text: str = file.read()
 
         # If input is raw text

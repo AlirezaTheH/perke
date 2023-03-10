@@ -40,7 +40,7 @@ def get_latest_resources_asset() -> GitReleaseAsset:
     The resources asset
     """
     g = Github()
-    repo = g.get_repo('sobhe/hazm')
+    repo = g.get_repo('roshan-research/hazm')
     for release in repo.get_releases():
         for asset in release.get_assets():
             if asset.name.startswith(f'resources-{release.tag_name[1:]}'):
