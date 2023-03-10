@@ -1,0 +1,11 @@
+[bumpver]
+current_version = '0.3.5'
+version_pattern = 'MAJOR.MINOR.PATCH'
+
+[bumpver.file_patterns]
+'perke/version.py' = [
+    "__version__ = '{version}'",
+]
+'bumpver.toml' = [
+    "current_version = '{version}'",
+]
