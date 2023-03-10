@@ -1,9 +1,10 @@
+*********
 Reference
-=========
+*********
 .. toctree::
     :maxdepth: 1
 
     utils
     base
-    unsupervised
+    unsupervised/index
     cli

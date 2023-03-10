@@ -1,17 +1,19 @@
-Base Perke Utils
-==============================
+******************
+Perke's Base Utils
+******************
+
 Extractor
----------
+=========
 .. automodule:: perke.base.extractor
     :members:
 
 Data Structures
----------------
+===============
 .. automodule:: perke.base.data_structures
     :members:
 
 Readers
--------
+=======
 .. autoclass:: perke.base.readers.Reader
     :members:
 
@@ -20,7 +22,6 @@ Readers
     :show-inheritance:
 
 Types
------
+=====
 .. automodule:: perke.base.types
     :members:
-    :undoc-members:

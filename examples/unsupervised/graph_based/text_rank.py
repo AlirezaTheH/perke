@@ -1,4 +1,4 @@
-from os.path import dirname, join
+from pathlib import Path
 
 from perke.unsupervised.graph_based import TextRank
 
@@ -9,12 +9,11 @@ valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 extractor = TextRank(valid_pos_tags=valid_pos_tags)
 
 # 2. Load the text.
-input_filepath = join(dirname(dirname(dirname(__file__))), 'input.txt')
-extractor.load_text(input=input_filepath,
-                    word_normalization_method=None)
+input_filepath = Path(__file__).parent.parent.parent / 'input.txt'
+extractor.load_text(input=input_filepath, word_normalization_method=None)
 
 # 3. Build the graph representation of the text and weight the
-#    words. Keyphrase candidates are composed from the 33 percent
+#    words. Keyphrase candidates are composed of the 33 percent
 #    highest weighted words.
 extractor.weight_candidates(window_size=2, top_t_percent=0.33)
 

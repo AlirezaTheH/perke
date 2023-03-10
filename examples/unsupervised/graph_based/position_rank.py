@@ -1,4 +1,4 @@
-from os.path import dirname, join
+from pathlib import Path
 
 from perke.unsupervised.graph_based import PositionRank
 
@@ -18,9 +18,8 @@ grammar = r"""
 extractor = PositionRank(valid_pos_tags=valid_pos_tags)
 
 # 2. Load the text.
-input_filepath = join(dirname(dirname(dirname(__file__))), 'input.txt')
-extractor.load_text(input=input_filepath,
-                    word_normalization_method=None)
+input_filepath = Path(__file__).parent.parent.parent / 'input.txt'
+extractor.load_text(input=input_filepath, word_normalization_method=None)
 
 # 3. Select the noun phrases up to 3 words as keyphrase candidates.
 extractor.select_candidates(grammar=grammar, maximum_word_number=3)

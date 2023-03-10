@@ -1,3 +1,7 @@
 sphinx
-sphinx-rtd-theme
+furo
 sphinxcontrib-napoleon
+sphinx-copybutton
+sphinx-click
+docutils
+myst-parser

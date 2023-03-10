@@ -78,7 +78,7 @@ understand your suggestion and find related suggestions.
   enhancement has already been suggested.  If it has, add a comment to the
   existing issue instead of opening a new one.
 
-##### Submitting A Enhancement Suggestion
+##### Submitting An Enhancement Suggestion
 Create an issue and provide the following information by filling in
 [the template](.github/ISSUE_TEMPLATE/feature_request.md):
 - **Title**: Use a clear and descriptive title for the issue to identify the
@@ -252,61 +252,10 @@ pre-commit run --all-files
 ### Python
 - All code should obey **The Zen of Python** principles according to
   [PEP 20](https://www.python.org/dev/peps/pep-0020/).
-- [PEP 8](https://www.python.org/dev/peps/pep-0008/) is the baseline coding
-  style.
+- Perke uses [Black](https://github.com/psf/black) code style with one
+  exception: strings should be single quote except docstring.
 - Since Python dropped support for version `2.x`, all code should have type
   hints according to [PEP 484](https://www.python.org/dev/peps/pep-0484/).
-- Use the following indentation conventions:
-  ```python
-  # For long function definitions
-  def long_function_name(var_one: Any,
-                         var_two: Any,
-                         var_three: Any,
-                         var_four: Any,
-                         ) -> Any:
-      pass
-
-  # For longer function definitions
-  def longer_function_name(
-      var_one: Any,
-      var_two: Any,
-      var_three: Any,
-      var_four: ANy,
-  ) -> Any:
-      pass
-
-  # For long function calls
-  foo = long_function_name(var_one,
-                           var_two,
-                           var_three,
-                           var_four)
-
-  # For longer function calls
-  foo = long_function_name(
-      var_one,
-      var_two,
-      var_three,
-      var_four,
-  )
-
-  # For long conditional part of an if-statement
-  if (this_is_one_thing
-          and that_is_another_thing):
-      do_something()
-
-  # For long sequences
-  long_list = ['this is a long string',
-               'this is an other long string',
-               'this also is a long string']
-
-  # For longer sequences
-  longer_list = [
-      'this is a long string',
-      'this is an other long string',
-      'this also is a long string',
-  ]
-  ```
-- All strings should be single quote except docstring.
 - Use the following import conventions:
   ```python
   # For following third parties import like below
@@ -318,20 +267,6 @@ pre-commit run --all-files
 
   # For local imports use absolute path
   from perke.base.extractor import Extractor
-
-  # For long imports
-  from foo import (function_one,
-                   function_two,
-                   function_two,
-                   function_four)
-
-  # For longer imports
-  from foo import (
-      function_one,
-      function_two,
-      function_two,
-      function_four,
-  )
   ```
 - All codes should have tests. See [testing](#testing).
 - All codes should be documented, to the same
@@ -346,14 +281,24 @@ pre-commit run --all-files
   - For maximum line length we use `79` as hard limit and `72` as a soft limit.
   - The default reStructuredText role in docstrings is `:py:obj:`. Use a single
     backticks for all API names.
-  - Type syntax in docstrings is not defined by any standard. we use
-    [PyCharm's syntax](https://www.jetbrains.com/help/pycharm/type-syntax-for-docstrings.html).
+  - docstrings must not have any type hints, they'll be automatically extracted
+    from objects' signature for documentation.
   - We use reStructuredText to mark up and give semantic meaning to text in
     docstrings. ReStructuredText is lightweight enough to read in raw form,
     such as command line terminal printouts, but is also parsed and rendered
     with Sphinx.
 
   See [documentation](#documentation).
+
+### Changelog
+Perke makes use of a changelog file that is based on
+[Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+- For each notable change describe the changes in a single line that explains
+  the change in terms that a user can understand.
+- Use the past tense ("Added the feature" not "Add the feature").
+- Make sure you add your line in a proper subsection, under the `Unreleased`
+  section.
+
 
 ## Documentation
 Perke makes use of Sphinx document generator, with documents located in the

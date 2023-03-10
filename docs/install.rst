@@ -1,5 +1,6 @@
+************
 Installation
-============
+************
 Perke is a Python package, which means you need to download and install Python
 from `python.org <https://www.python.org/downloads>`_ if you haven't already.
 Once you have Python installed, follow bellow steps:

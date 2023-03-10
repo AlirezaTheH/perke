@@ -1,8 +1,9 @@
 # Perke
-[![Build Status](https://travis-ci.com/alirezatheh/perke.svg?branch=main)](https://travis-ci.com/alirezatheh/perke)
-[![Documentation Status](https://readthedocs.org/projects/perke/badge/?version=latest)](https://perke.readthedocs.io/en/latest/?badge=latest)
+[![tests](https://github.com/alirezatheh/perke/workflows/tests/badge.svg)](https://github.com/alirezatheh/perke/actions/workflows/tests.yaml)
+[![pre-commit.ci](https://results.pre-commit.ci/badge/github/AlirezaTheH/perke/main.svg)](https://results.pre-commit.ci/latest/github/alirezatheh/perke/main)
 [![PyPI Version](https://img.shields.io/pypi/v/perke)](https://pypi.python.org/pypi/perke)
 [![Python Versions](https://img.shields.io/pypi/pyversions/perke)](https://pypi.org/project/perke)
+[![Documentation Status](https://readthedocs.org/projects/perke/badge/?version=stable)](https://perke.readthedocs.io/en/latest/?badge=stable)
 
 Perke is a Python keyphrase extraction package for Persian language. It
 provides an end-to-end keyphrase extraction pipeline in which each component
@@ -37,26 +38,22 @@ by typing the 4 lines below to use `TextRank` keyphrase extractor.
 ```python
 from perke.unsupervised.graph_based import TextRank
 
-# Define the set of valid part of speech tags to occur in the model.
-valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
-
 # 1. Create a TextRank extractor.
-extractor = TextRank(valid_pos_tags=valid_pos_tags)
+extractor = TextRank()
 
 # 2. Load the text.
-extractor.load_text(input='text or path/to/input_file',
-                    word_normalization_method=None)
+extractor.load_text(input='text or path/to/input_file')
 
 # 3. Build the graph representation of the text and weight the
-#    words. Keyphrase candidates are composed from the 33 percent
+#    words. Keyphrase candidates are composed of the 33 percent
 #    highest weighted words.
-extractor.weight_candidates(window_size=2, top_t_percent=0.33)
+extractor.weight_candidates(top_t_percent=0.33)
 
 # 4. Get the 10 highest weighted candidates as keyphrases.
 keyphrases = extractor.get_n_best(n=10)
 ```
 
-For other models, see the
+For more in depth examples see the
 [`examples`](https://github.com/alirezatheh/perke/tree/main/examples)
 directory.
 

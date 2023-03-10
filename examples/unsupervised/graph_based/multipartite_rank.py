@@ -1,8 +1,5 @@
-from os.path import dirname, join
+from pathlib import Path
 
-from perke.base.types import (HierarchicalClusteringLinkageMethod,
-                              HierarchicalClusteringMetric,
-                              WordNormalizationMethod)
 from perke.unsupervised.graph_based import MultipartiteRank
 
 # Define the set of valid part of speech tags to occur in the model.
@@ -12,11 +9,8 @@ valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
 extractor = MultipartiteRank(valid_pos_tags=valid_pos_tags)
 
 # 2. Load the text.
-input_filepath = join(dirname(dirname(dirname(__file__))), 'input.txt')
-extractor.load_text(
-    input=input_filepath,
-    word_normalization_method=WordNormalizationMethod.stemming,
-)
+input_filepath = Path(__file__).parent.parent.parent / 'input.txt'
+extractor.load_text(input=input_filepath, word_normalization_method='stemming')
 
 # 3. Select the longest sequences of nouns and adjectives, that do
 #    not contain punctuation marks or stopwords as candidates.
@@ -28,8 +22,8 @@ extractor.select_candidates()
 #    parameters.
 extractor.weight_candidates(
     threshold=0.74,
-    metric=HierarchicalClusteringMetric.jaccard,
-    linkage_method=HierarchicalClusteringLinkageMethod.average,
+    metric='jaccard',
+    linkage_method='average',
     alpha=1.1,
 )
 
@@ -37,4 +31,4 @@ extractor.weight_candidates(
 keyphrases = extractor.get_n_best(n=10)
 
 for i, (weight, keyphrase) in enumerate(keyphrases):
-    print(f'{i+1}.\t{keyphrase}, \t{weight}')
+    print(f'{i + 1}.\t{keyphrase}, \t{weight}')
