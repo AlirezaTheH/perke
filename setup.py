@@ -16,7 +16,7 @@ for extra in requirements_path.iterdir():
 with open('README.md') as f:
     long_description = f.read()
 
-with open(Path('medicure') / 'version.py') as f:
+with open(Path('perke') / 'version.py') as f:
     version = re.search(
         r'__version__\s=\s\'(?P<version>.*)\'', f.read()
     ).group('version')

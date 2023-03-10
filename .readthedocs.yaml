@@ -7,7 +7,7 @@ build:
   jobs:
     post_install:
       - pip install .
-      - medicure
+      - perke
 
 python:
   install:
