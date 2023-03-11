@@ -1,5 +1,6 @@
 from io import BytesIO
 from pathlib import Path
+from typing import Optional
 from zipfile import ZipFile
 
 import requests
@@ -11,35 +12,49 @@ from perke.cli.base import app
 
 
 @app.command('download')
-def download_command() -> None:
+def download_command(
+    github_token: Optional[str] = typer.Argument(
+        None,
+        help=(
+            'The GitHub token to use with GitHub API in order to avoid rate'
+            'limit'
+        ),
+    ),
+) -> None:
     """
     Perke requires a trained POS tagger model. We use hazm's tagger
     model. This command aims to easily download latest hazm's resources
     (tagger and parser models).
     """
-    download()
+    download(github_token)
 
 
-def download() -> None:
+def download(github_token: Optional[str] = None) -> None:
     """
     Function version of `download_command` to be available in the
     package.
     """
-    asset = get_latest_resources_asset()
+    asset = get_latest_resources_asset(github_token)
     extract_path = Path(__file__).parent.parent / 'resources'
     download_and_extract_asset(asset, extract_path)
 
 
-def get_latest_resources_asset() -> GitReleaseAsset:
+def get_latest_resources_asset(github_token: str) -> GitReleaseAsset:
     """
     Searches through hazm's releases and find the latest release that
     contains resources.
+
+    Parameters
+    ----------
+    github_token:
+        The GitHub token to use with GitHub API in order to avoid rate
+        limit
 
     Returns
     -------
     The resources asset
     """
-    g = Github()
+    g = Github(login_or_token=github_token)
     repo = g.get_repo('roshan-research/hazm')
     for release in repo.get_releases():
         for asset in release.get_assets():

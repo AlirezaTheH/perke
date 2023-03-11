@@ -28,6 +28,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Removed type hints from docstrings
 - Added `MANIFEST.in` to include extras requirements in source builds
 - Fixed an unicode decode error in Windows
+- Avoided GitHub rate limit when running tests
 
 
 ## [0.3.5] - 2022-08-19
