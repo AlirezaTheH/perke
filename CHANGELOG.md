@@ -7,6 +7,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
 ## [Unreleased]
+
+## [0.4.1] - 2023-03-15
 ### Fixed
 - Fixed a version issue on PyPI
 
@@ -49,7 +51,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - First version of CLI added
 
 
-[Unreleased]: https://github.com/alirezatheh/perke/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/alirezatheh/perke/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/alirezatheh/perke/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/alirezatheh/perke/compare/v0.3.5...v0.4.0
 [0.3.5]: https://github.com/alirezatheh/perke/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/alirezatheh/perke/releases/tag/v0.3.4
