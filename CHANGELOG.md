@@ -24,6 +24,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Revised documentation
 - Changed CI from Travis CI to GitHub workflows
 
+### Removed
+- Removed Windows tests since hazm runs on WSL and WSL tests is same as Linux
+
 ### Fixed
 - Removed type hints from docstrings
 - Added `MANIFEST.in` to include extras requirements in source builds
