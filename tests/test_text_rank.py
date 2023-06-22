@@ -8,8 +8,8 @@ def test_original_article_default(text: str) -> None:
     keyphrases = [keyphrase for keyphrase, weight in extractor.get_n_best(n=3)]
     assert keyphrases == [
         'کاربردهای پردازش زبان طبیعی',
-        'کاربردهای گفتاری پردازش زبان',
         'زمینه درک زبان طبیعی',
+        'پردازش اطلاعات زبانی',
     ]
 
 
@@ -22,5 +22,5 @@ def test_with_candidate_selection(text: str) -> None:
     assert keyphrases == [
         'کاربردهای متنوع پردازش زبان‌های طبیعی',
         'کاربردهای پردازش زبان طبیعی',
-        'کاربردهای گفتاری پردازش زبان',
+        'زمینه درک زبان طبیعی',
     ]

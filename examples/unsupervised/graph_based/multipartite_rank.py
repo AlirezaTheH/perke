@@ -3,7 +3,7 @@ from pathlib import Path
 from perke.unsupervised.graph_based import MultipartiteRank
 
 # Define the set of valid part of speech tags to occur in the model.
-valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
+valid_pos_tags = {'NOUN', 'ADJ'}
 
 # 1. Create a MultipartiteRank extractor.
 extractor = MultipartiteRank(valid_pos_tags=valid_pos_tags)

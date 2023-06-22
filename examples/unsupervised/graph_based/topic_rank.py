@@ -1,15 +1,15 @@
-from os.path import dirname, join
+from pathlib import Path
 
 from perke.unsupervised.graph_based import TopicRank
 
 # Define the set of valid part of speech tags to occur in the model.
-valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
+valid_pos_tags = {'NOUN', 'ADJ'}
 
 # 1. Create a TopicRank extractor.
 extractor = TopicRank(valid_pos_tags=valid_pos_tags)
 
 # 2. Load the text.
-input_filepath = join(dirname(dirname(dirname(__file__))), 'input.txt')
+input_filepath = Path(__file__).parent.parent.parent / 'input.txt'
 extractor.load_text(input=input_filepath, word_normalization_method='stemming')
 
 # 3. Select the longest sequences of nouns and adjectives, that do

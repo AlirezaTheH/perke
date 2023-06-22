@@ -1,4 +1,3 @@
-from os.path import dirname, join
 from pathlib import Path
 from typing import List
 
@@ -31,7 +30,9 @@ class Reader:
     """
 
     def __init__(
-        self, word_normalization_method: WordNormalizationMethod
+        self,
+        word_normalization_method: WordNormalizationMethod,
+        universal_pos_tags: bool,
     ) -> None:
         """
         Initializes the reader.
@@ -42,6 +43,9 @@ class Reader:
             Word normalization method, see
             `perke.base.types.WordNormalizationMethod` for available
             methods.
+
+        universal_pos_tags:
+            Whether to use universal part of speech tags or not
         """
         self.word_normalization_method: WordNormalizationMethod = (
             word_normalization_method
@@ -49,10 +53,12 @@ class Reader:
         self.normalizer: hazm.Normalizer = hazm.Normalizer()
         self.stemmer: hazm.Stemmer = hazm.Stemmer()
         self.lemmatizer: hazm.Lemmatizer = hazm.Lemmatizer()
-        model_filepath = join(
-            dirname(dirname(__file__)), 'resources', 'postagger.model'
+        self.pos_tagger: hazm.POSTagger = hazm.POSTagger(
+            model=str(
+                Path(__file__).parent.parent / 'resources' / 'pos_tagger.model'
+            ),
+            universal_tag=universal_pos_tags,
         )
-        self.pos_tagger: hazm.POSTagger = hazm.POSTagger(model=model_filepath)
 
 
 class RawTextReader(Reader):
@@ -69,6 +75,7 @@ class RawTextReader(Reader):
         self,
         input: str,
         word_normalization_method: WordNormalizationMethod,
+        universal_pos_tags,
     ) -> None:
         """
         Initializes the reader.
@@ -82,8 +89,11 @@ class RawTextReader(Reader):
             Word normalization method, see
             `perke.base.types.WordNormalizationMethod` for available
             methods.
+
+        universal_pos_tags:
+            Whether to use universal part of speech tags or not
         """
-        super().__init__(word_normalization_method)
+        super().__init__(word_normalization_method, universal_pos_tags)
 
         # If input is a filepath
         if isinstance(input, Path):

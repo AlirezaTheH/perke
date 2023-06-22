@@ -42,8 +42,10 @@ class PositionRank(SingleRank):
         ----------
         valid_pos_tags:
             Set of valid part of speech tags, defaults to nouns and
-            adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
+            adjectives. I.e. `{'NOUN', 'NOUN,EZ', 'ADJ', 'ADJ,EZ'}`.
         """
+        if valid_pos_tags is None:
+            valid_pos_tags = {'NOUN', 'NOUN,EZ', 'ADJ', 'ADJ,EZ'}
         super().__init__(valid_pos_tags)
         self.positions: DefaultDict[str, float] = defaultdict(float)
 
@@ -66,22 +68,21 @@ class PositionRank(SingleRank):
             defaults to::
                 r\"""
                 NP:
-                    <P>{<N>}<V>
+                    {<NOUN>}<VERB>
                 NP:
-                    {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
-                    <N>}{<.*e?>.
+                    {<DET(,EZ)?|NOUN(,EZ)?|NUM(,EZ)?|ADJ(,EZ)|PRON><DET(,EZ)|NOUN(,EZ)|NUM(,EZ)|ADJ(,EZ)|PRON>*}
+                    <NOUN>}{<.*(,EZ)?>
                 \"""
-
         maximum_length: `int`
             Maximum length in words of the candidate, defaults to `3`.
         """
         if grammar is None:
             grammar = r"""
                 NP:
-                    <P>{<N>}<V>
+                    {<NOUN>}<VERB>
                 NP:
-                    {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
-                    <N>}{<.*e?>
+                    {<DET(,EZ)?|NOUN(,EZ)?|NUM(,EZ)?|ADJ(,EZ)|PRON><DET(,EZ)|NOUN(,EZ)|NUM(,EZ)|ADJ(,EZ)|PRON>*}
+                    <NOUN>}{<.*(,EZ)?>
             """
 
         # Select sequence of noun phrases with given pattern

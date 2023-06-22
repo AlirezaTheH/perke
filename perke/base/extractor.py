@@ -45,7 +45,7 @@ class Extractor:
         ----------
         valid_pos_tags:
             Set of valid part of speech tags, defaults to nouns and
-            adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
+            adjectives. I.e. `{'NOUN', 'ADJ'}`.
         """
         self.word_normalization_method: Optional[str] = None
         self.sentences: List[Sentence] = []
@@ -54,13 +54,14 @@ class Extractor:
             punctuation_marks
         )
         if valid_pos_tags is None:
-            valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
+            valid_pos_tags = {'NOUN', 'ADJ'}
         self.valid_pos_tags: Set[str] = valid_pos_tags
 
     def load_text(
         self,
         input: Union[str, Path],
         word_normalization_method: WordNormalizationMethod = 'stemming',
+        universal_pos_tags: bool = True,
     ) -> None:
         """
         Loads the text of a document or string.
@@ -74,9 +75,15 @@ class Extractor:
             Word normalization method, defaults to `'stemming'`. See
             `perke.base.types.WordNormalizationMethod` for available
             methods.
+
+        universal_pos_tags:
+            Whether to use universal part of speech tags or not,
+            defaults to `True`.
         """
         # Initialize reader
-        reader = RawTextReader(input, word_normalization_method)
+        reader = RawTextReader(
+            input, word_normalization_method, universal_pos_tags
+        )
 
         # Load sentences
         self.sentences = reader.read()
@@ -225,7 +232,7 @@ class Extractor:
             The offset of the occurrence
 
         normalized_words:
-            List of normalized of words of the occurrence
+            List of normalized words of the occurrence
         """
         # Build the canonical form of the candidate
         canonical_form = ' '.join(normalized_words)
@@ -306,7 +313,7 @@ class Extractor:
                     first = sequence_offsets[0]
                     last = sequence_offsets[-1]
 
-                    # Add the ngram as a new candidate occurrence
+                    # Add the n-gram as a new candidate occurrence
                     self._add_candidate_occurrence(
                         words=sentence.words[first : last + 1],
                         offset=offset_shift + first,
@@ -336,20 +343,20 @@ class Extractor:
             defaults to::
                 r\"""
                 NP:
-                    <P>{<N>}<V>
+                    {<NOUN>}<VERB>
                 NP:
-                    {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
-                    <N>}{<.*e?>'
+                    {<DET(,EZ)?|NOUN(,EZ)?|NUM(,EZ)?|ADJ(,EZ)|PRON><DET(,EZ)|NOUN(,EZ)|NUM(,EZ)|ADJ(,EZ)|PRON>*}
+                    <NOUN>}{<.*(,EZ)?>
                 \"""
         """
         # Initialize default grammar if none provided
         if grammar is None:
             grammar = r"""
                 NP:
-                    <P>{<N>}<V>
+                    {<NOUN>}<VERB>
                 NP:
-                    {<DETe?|Ne?|NUMe?|AJe|PRO|CL|RESe?><DETe?|Ne?|NUMe?|AJe?|PRO|CL|RESe?>*}
-                    <N>}{<.*e?>
+                    {<DET(,EZ)?|NOUN(,EZ)?|NUM(,EZ)?|ADJ(,EZ)|PRON><DET(,EZ)|NOUN(,EZ)|NUM(,EZ)|ADJ(,EZ)|PRON>*}
+                    <NOUN>}{<.*(,EZ)?>
             """
 
         # Initialize parser

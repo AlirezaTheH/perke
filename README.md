@@ -3,7 +3,7 @@
 [![pre-commit.ci](https://results.pre-commit.ci/badge/github/AlirezaTheH/perke/main.svg)](https://results.pre-commit.ci/latest/github/alirezatheh/perke/main)
 [![PyPI Version](https://img.shields.io/pypi/v/perke)](https://pypi.python.org/pypi/perke)
 [![Python Versions](https://img.shields.io/pypi/pyversions/perke)](https://pypi.org/project/perke)
-[![Documentation Status](https://readthedocs.org/projects/perke/badge/?version=stable)](https://perke.readthedocs.io/en/latest/?badge=stable)
+[![Documentation Status](https://readthedocs.org/projects/perke/badge/?version=stable)](https://perke.readthedocs.io/en/stable/?badge=stable)
 
 Perke is a Python keyphrase extraction package for Persian language. It
 provides an end-to-end keyphrase extraction pipeline in which each component

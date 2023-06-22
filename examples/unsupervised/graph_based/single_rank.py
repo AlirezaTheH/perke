@@ -3,7 +3,7 @@ from pathlib import Path
 from perke.unsupervised.graph_based import SingleRank
 
 # Define the set of valid part of speech tags to occur in the model.
-valid_pos_tags = {'N', 'Ne', 'AJ', 'AJe'}
+valid_pos_tags = {'NOUN', 'ADJ'}
 
 # 1. Create a SingleRank extractor.
 extractor = SingleRank(valid_pos_tags=valid_pos_tags)

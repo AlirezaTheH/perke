@@ -50,7 +50,7 @@ class TextRank(Extractor):
         ----------
         valid_pos_tags:
             Set of valid part of speech tags, defaults to nouns and
-            adjectives. I.e. `{'N', 'Ne', 'AJ', 'AJe'}`.
+            adjectives. I.e. `{'NOUN', 'ADJ'}`.
         """
         super().__init__(valid_pos_tags)
         self.graph: nx.Graph = nx.Graph()

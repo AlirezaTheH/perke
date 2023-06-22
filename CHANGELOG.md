@@ -7,6 +7,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
 ## [Unreleased]
+### Added
+- Added support for Python `3.11`
+- Brought Windows tests back
+
+### Changed
+- Adopted Perke with all changes in
+  [Hazm](https://github.com/roshan-research/hazm) `0.9` release
 
 ## [0.4.1] - 2023-03-15
 ### Fixed
@@ -32,7 +39,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Changed CI from Travis CI to GitHub workflows
 
 ### Removed
-- Removed Windows tests since hazm runs on WSL and WSL tests is same as Linux
+- Removed Windows tests since [Hazm](https://github.com/roshan-research/hazm)
+  runs on WSL and WSL tests is same as Linux
 
 ### Fixed
 - Removed type hints from docstrings
