@@ -7,6 +7,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
 ## [Unreleased]
+
+## [0.4.2] - 2023-06-22
 ### Added
 - Added support for Python `3.11`
 - Brought Windows tests back
@@ -59,7 +61,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - First version of CLI added
 
 
-[Unreleased]: https://github.com/alirezatheh/perke/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/alirezatheh/perke/compare/v0.4.2...HEAD
+[0.4.2]: https://github.com/alirezatheh/perke/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/alirezatheh/perke/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/alirezatheh/perke/compare/v0.3.5...v0.4.0
 [0.3.5]: https://github.com/alirezatheh/perke/compare/v0.3.4...v0.3.5
