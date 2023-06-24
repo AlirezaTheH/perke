@@ -36,6 +36,7 @@ setup(
     author='Alireza Hosseini',
     author_email='alirezatheh@gmail.com',
     packages=find_packages(exclude=['tests*']),
+    include_package_data=True,
     entry_points={'console_scripts': ['perke = perke.cli:setup_cli']},
     keywords=[
         'nlp',
