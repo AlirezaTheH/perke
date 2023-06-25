@@ -1,2 +1,2 @@
-include README.md
+include perke/resources/README.md
 include requirements/*.txt

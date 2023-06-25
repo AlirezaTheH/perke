@@ -7,6 +7,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
 ## [Unreleased]
+### Added
+- Added
+  [`resources`](https://github.com/alirezatheh/perke/tree/main/perke/resources)'s
+  README.md to distributed package for clearance.
 
 ## [0.4.3] - 2023-06-24
 ### Fixed
